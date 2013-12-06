@@ -38,7 +38,7 @@ namespace AmericaDefense
         public int speed;
         public int value;
 
-        public virtual void EnemyStats()
+        public virtual void EnemyStats(EnemyType type)
         {
             switch (type)
             {
