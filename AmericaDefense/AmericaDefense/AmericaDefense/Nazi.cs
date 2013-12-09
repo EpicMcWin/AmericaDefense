@@ -33,10 +33,16 @@ namespace AmericaDefense
             
         }
 
+        
+        private List<List<Vector2>> pathWaypoints =
+            new List<List<Vector2>>();
+        private Dictionary<int, int> waveSpawns = new Dictionary<int, int>();
+
         public EnemyType type;
         public int health;
         public int speed;
         public int value;
+        public int NazisRemaining;
 
         public virtual void EnemyStats(EnemyType type)
         {
@@ -80,9 +86,15 @@ namespace AmericaDefense
             }
         }
 
-        public virtual void SpawnNazi()
+        private void setUpWaypoints()
         {
-
+            List<Vector2> path0 = new List<Vector2>();
+            path0.Add(new Vector2(850, 300));
+            path0.Add(new Vector2(-100, 300));
+            pathWaypoints.Add(path0);
+            waveSpawns[0] = 0;
         }
+
+        
     }
 }
