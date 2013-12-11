@@ -42,7 +42,7 @@ namespace AmericaDefense
         public int health;
         public int speed;
         public int value;
-        public int NazisRemaining;
+        public bool IsAircraft;
 
         public virtual void EnemyStats(EnemyType type)
         {
@@ -52,36 +52,42 @@ namespace AmericaDefense
                     health = 100;
                     speed = 50;
                     value = 20;
+                    IsAircraft = false;
                     break;
 
                 case EnemyType.SCOUT:
                     health = 50;
                     speed = 100;
                     value = 10;
+                    IsAircraft = false;
                     break;
 
                 case EnemyType.TANK:
                     health = 500;
                     speed = 30;
                     value = 50;
+                    IsAircraft = false;
                     break;
 
                 case EnemyType.PLANE:
                     health = 250;
                     speed = 150;
                     value = 70;
+                    IsAircraft = true;
                     break;
 
                 case EnemyType.BOMBER:
                     health = 400;
                     speed = 75;
                     value = 100;
+                    IsAircraft = true;
                     break;
 
                 case EnemyType.TRANSPORT:
                     health = 200;
                     speed = 100;
                     value = 30;
+                    IsAircraft = false;
                     break;
             }
         }

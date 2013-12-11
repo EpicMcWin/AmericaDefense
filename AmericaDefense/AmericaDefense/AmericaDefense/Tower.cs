@@ -39,6 +39,7 @@ namespace AmericaDefense
         public int cost;
         public int damage;
         public bool CanShootAircraft;
+        public Nazi target;
 
         public virtual void TowerStats(TowerType type)
         {
@@ -65,7 +66,7 @@ namespace AmericaDefense
                     fireRate = 2;
                     damage = 250;
                     range = 100;
-                    CanShootAircraft = true;
+                    CanShootAircraft = false;
                     break;
 
                 case TowerType.SNIPER:
@@ -94,9 +95,9 @@ namespace AmericaDefense
             }
         }
 
-        public bool CanShoot(int range, int distance)
+        public bool CanShoot(int range, int distance, bool aircraft)
         {
-            if (range - distance >= 0)
+            if (range - distance >= 0 && CanShootAircraft == target.IsAircraft)
             {
                 return true;
             }
@@ -105,6 +106,10 @@ namespace AmericaDefense
             {
                 return false;
             }
+        }
+
+        public void FireProjectile()
+        {
         }
         
     }
