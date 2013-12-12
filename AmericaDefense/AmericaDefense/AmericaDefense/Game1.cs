@@ -27,6 +27,9 @@ namespace AmericaDefense
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferHeight = 1280;
+            graphics.PreferredBackBufferWidth = 1280;
+            Window.AllowUserResizing = true;
         }
 
         /// <summary>
@@ -37,8 +40,10 @@ namespace AmericaDefense
         /// </summary>
         protected override void Initialize()
         {
+            
+            
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -48,11 +53,14 @@ namespace AmericaDefense
         /// </summary>
         protected override void LoadContent()
         {
+          
             // Create a new SpriteBatch, which can be used to draw textures.
+            mapDisplayDevice = new XnaDisplayDevice(Content, GraphicsDevice);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             map = Content.Load<xTile.Map>("Background");
             map.LoadTileSheets(mapDisplayDevice);
             viewport = new xTile.Dimensions.Rectangle(0, 0, 1280, 1280);
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -88,7 +96,7 @@ namespace AmericaDefense
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
+            
             // TODO: Add your drawing code here
             map.Draw(mapDisplayDevice, viewport);
             base.Draw(gameTime);

@@ -125,6 +125,8 @@
   <ItemGroup>
     <Compile Include="Background.tide">
       <Name>Background</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
