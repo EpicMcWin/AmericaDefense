@@ -18,12 +18,20 @@ namespace AmericaDefense
         PLANE,
         BOMBER,
         TRANSPORT,
+        TRANSPORTNAZI,
         SCOUT
     }
 
     class Nazi : Sprite
     {
+        public Sprite NaziSprite;
+        Texture2D FootSoldiers;
+        Texture2D Tanks;
 
+        private int naziRadius = 15;
+        private Vector2 previousLocation = Vector2.Zero;
+        private Vector2 currentWaypoint = Vector2.Zero;
+        private Queue<Vector2> waypoints = new Queue<Vector2>();
 
         public Nazi(
             Vector2 location,
@@ -32,13 +40,61 @@ namespace AmericaDefense
             Vector2 velocity)
             : base(location, texture, initialFrame, velocity)
         {
-            
-        }
+            NaziSprite = new Sprite(
+                location,
+                texture,
+                initialFrame,
+                Vector2.Zero);
 
+            previousLocation = location;
+            currentWaypoint = location;
+            NaziSprite.CollisionRadius = naziRadius;
+        }
+        
         
         private List<List<Vector2>> pathWaypoints =
             new List<List<Vector2>>();
         private Dictionary<int, int> waveSpawns = new Dictionary<int, int>();
+        
+        private void setUpWaypoints()
+        {
+            List<Vector2> path0 = new List<Vector2>();
+            path0.Add(new Vector2(284, 284));
+            path0.Add(new Vector2(284, 142));
+            path0.Add(new Vector2(781, 142));
+            path0.Add(new Vector2(781, 710));
+            path0.Add(new Vector2(568, 710));
+            path0.Add(new Vector2(426, 710));
+            path0.Add(new Vector2(426, 923));
+            path0.Add(new Vector2(852, 923));
+
+            path0.Add(new Vector2(568, 710));
+            path0.Add(new Vector2(426, 710));
+            path0.Add(new Vector2(568, 710));
+            path0.Add(new Vector2(426, 710));
+            pathWaypoints.Add(path0);
+            waveSpawns[0] = 0;
+        }
+        public void AddWaypoint(Vector2 waypoint)
+        {
+            waypoints.Enqueue(waypoint);
+        }
+
+        public bool WaypointReached()
+        {
+            if (Vector2.Distance(NaziSprite.Location, currentWaypoint) <
+                (float)NaziSprite.Source.Width / 2)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        
+        
 
         public EnemyType type;
         public int health;
@@ -94,14 +150,7 @@ namespace AmericaDefense
             }
         }
 
-        private void setUpWaypoints()
-        {
-            List<Vector2> path0 = new List<Vector2>();
-            path0.Add(new Vector2(850, 300));
-            path0.Add(new Vector2(-100, 300));
-            pathWaypoints.Add(path0);
-            waveSpawns[0] = 0;
-        }
+        
 
         
     }

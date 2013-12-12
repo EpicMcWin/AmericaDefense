@@ -23,6 +23,8 @@ namespace AmericaDefense
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
+        
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);

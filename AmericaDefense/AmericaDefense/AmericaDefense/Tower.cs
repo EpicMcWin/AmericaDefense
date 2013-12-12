@@ -22,6 +22,7 @@ namespace AmericaDefense
 
     class Tower : Sprite
     {
+        
 
         public Tower(
             Vector2 location,
