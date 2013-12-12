@@ -11,17 +11,19 @@ using Microsoft.Xna.Framework.Media;
 
 namespace AmericaDefense
 {
+    enum EnemyType
+    {
+        FOOTSOLDIER,
+        TANK,
+        PLANE,
+        BOMBER,
+        TRANSPORT,
+        SCOUT
+    }
+
     class Nazi : Sprite
     {
-        enum EnemyType
-        {
-            FOOTSOLDIER,
-            TANK,
-            PLANE,
-            BOMBER,
-            TRANSPORT,
-            SCOUT
-        }
+
 
         public Nazi(
             Vector2 location,

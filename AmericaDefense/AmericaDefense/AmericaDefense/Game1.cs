@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using xTile;
+using xTile.Display;
 
 namespace AmericaDefense
 {
@@ -18,7 +20,9 @@ namespace AmericaDefense
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Map map;
+        IDisplayDevice mapDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -46,7 +50,9 @@ namespace AmericaDefense
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            map = Content.Load<xTile.Map>("Background");
+            map.LoadTileSheets(mapDisplayDevice);
+            viewport = new xTile.Dimensions.Rectangle(0, 0, 1280, 1280);
             // TODO: use this.Content to load your game content here
         }
 
@@ -84,7 +90,7 @@ namespace AmericaDefense
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            map.Draw(mapDisplayDevice, viewport);
             base.Draw(gameTime);
         }
     }

@@ -9,10 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 namespace AmericaDefense
-{
-    class Tower : Sprite
-    {
-        enum TowerType
+{        
+    public enum TowerType
         {
             RIFLE,
             MG,
@@ -21,6 +19,10 @@ namespace AmericaDefense
             FLAMETHROWER,
             AAGUN
         }
+
+    class Tower : Sprite
+    {
+
         public Tower(
             Vector2 location,
             Texture2D texture,

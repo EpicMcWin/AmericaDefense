@@ -106,7 +106,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="xTile">
-      <HintPath>.\xTile.dll</HintPath>
+      <HintPath>..\xTile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
