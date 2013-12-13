@@ -23,6 +23,8 @@ namespace AmericaDefense
         Map map;
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
+        NaziManager naziManager;
+        Texture2D FootSoldiers;
         
         
         public Game1()
@@ -62,6 +64,17 @@ namespace AmericaDefense
             map = Content.Load<xTile.Map>("Background");
             map.LoadTileSheets(mapDisplayDevice);
             viewport = new xTile.Dimensions.Rectangle(0, 0, 1280, 1280);
+            FootSoldiers = Content.Load<Texture2D>("FootSoldiers");
+
+            naziManager = new NaziManager(
+                FootSoldiers,
+                new Rectangle(0, 200, 50, 50),
+                6,
+                new Rectangle(
+                    0,
+                    0,
+                    this.Window.ClientBounds.Width,
+                    this.Window.ClientBounds.Height));
             
             // TODO: use this.Content to load your game content here
         }

@@ -34,8 +34,8 @@ namespace AmericaDefense
         private Queue<Vector2> waypoints = new Queue<Vector2>();
 
         public Nazi(
-            Vector2 location,
             Texture2D texture,
+            Vector2 location,
             Rectangle initialFrame,
             Vector2 velocity)
             : base(location, texture, initialFrame, velocity)
@@ -67,11 +67,10 @@ namespace AmericaDefense
             path0.Add(new Vector2(426, 710));
             path0.Add(new Vector2(426, 923));
             path0.Add(new Vector2(852, 923));
-
-            path0.Add(new Vector2(568, 710));
-            path0.Add(new Vector2(426, 710));
-            path0.Add(new Vector2(568, 710));
-            path0.Add(new Vector2(426, 710));
+            path0.Add(new Vector2(852, 1065));
+            path0.Add(new Vector2(994, 1065));
+            path0.Add(new Vector2(994, 497));
+            path0.Add(new Vector2(1278, 497));
             pathWaypoints.Add(path0);
             waveSpawns[0] = 0;
         }
