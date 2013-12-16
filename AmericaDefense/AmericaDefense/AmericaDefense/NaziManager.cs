@@ -38,37 +38,36 @@ namespace AmericaDefense
         private int p;
         private Rectangle rectangle_2;
 
-        public NaziManager(Texture2D FootSoldiers, Rectangle rectangle, int p, Rectangle rectangle_2)
-        {
-            // TODO: Complete member initialization
-            this.FootSoldiers = FootSoldiers;
-            this.rectangle = rectangle;
-            this.p = p;
-            this.rectangle_2 = rectangle_2;
-        }
+        //public NaziManager(Texture2D FootSoldiers, Rectangle rectangle, int p, Rectangle rectangle_2)
+        //{
+        //    // TODO: Complete member initialization
+        //    this.FootSoldiers = FootSoldiers;
+        //    this.rectangle = rectangle;
+        //    this.p = p;
+        //    this.rectangle_2 = rectangle_2;
+        //}
 
         
             private void setUpWaypoints()
         {
             List<Vector2> path0 = new List<Vector2>();
-            path0.Add(new Vector2(284, 284));
-            path0.Add(new Vector2(284, 142));
-            path0.Add(new Vector2(781, 142));
-            path0.Add(new Vector2(781, 710));
-            path0.Add(new Vector2(568, 710));
-            path0.Add(new Vector2(426, 710));
-            path0.Add(new Vector2(426, 923));
-            path0.Add(new Vector2(852, 923));
-            path0.Add(new Vector2(852, 1065));
-            path0.Add(new Vector2(994, 1065));
-            path0.Add(new Vector2(994, 497));
-            path0.Add(new Vector2(1278, 497));
+            path0.Add(new Vector2(256, 256));
+            path0.Add(new Vector2(256, 128));
+            path0.Add(new Vector2(640, 128));
+            path0.Add(new Vector2(640, 768));
+            path0.Add(new Vector2(384, 768));
+            path0.Add(new Vector2(384, 512));
+            path0.Add(new Vector2(192, 512));
+            path0.Add(new Vector2(192, 960));
+            path0.Add(new Vector2(896, 960));
+            path0.Add(new Vector2(896, 832));
+            path0.Add(new Vector2(1152, 832));
             pathWaypoints.Add(path0);
             waveSpawns[0] = 0;
         }
         
 
-        public void NaziManager(
+        public NaziManager(
             Texture2D texture,
             Rectangle initialFrame,
             int frameCount,
@@ -87,7 +86,7 @@ namespace AmericaDefense
                 texture,
                 pathWaypoints[path][0],
                 initialFrame,
-                Vector2.Zero);
+                new Vector2(20, 0));
             for (int x = 0; x < pathWaypoints[path].Count(); x++)
             {
                 thisEnemy.AddWaypoint(pathWaypoints[path][x]);

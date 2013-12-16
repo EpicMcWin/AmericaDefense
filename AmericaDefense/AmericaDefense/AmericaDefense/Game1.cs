@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using xTile;
 using xTile.Display;
 
+
 namespace AmericaDefense
 {
     /// <summary>
@@ -31,9 +32,11 @@ namespace AmericaDefense
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferHeight = 1280;
+            graphics.PreferredBackBufferHeight = 1080;
             graphics.PreferredBackBufferWidth = 1280;
             Window.AllowUserResizing = true;
+            IsMouseVisible = true;
+            
         }
 
         /// <summary>
@@ -68,8 +71,8 @@ namespace AmericaDefense
 
             naziManager = new NaziManager(
                 FootSoldiers,
-                new Rectangle(0, 200, 50, 50),
-                6,
+                new Rectangle(79, 51, 24, 26),
+                3,
                 new Rectangle(
                     0,
                     0,
@@ -100,7 +103,7 @@ namespace AmericaDefense
                 this.Exit();
 
             // TODO: Add your update logic here
-
+            naziManager.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -110,8 +113,8 @@ namespace AmericaDefense
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+            GraphicsDevice.Clear(Color.LightSteelBlue);
+            naziManager.Draw(spriteBatch);
             // TODO: Add your drawing code here
             map.Draw(mapDisplayDevice, viewport);
             base.Draw(gameTime);
