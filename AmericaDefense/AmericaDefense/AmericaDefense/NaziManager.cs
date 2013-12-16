@@ -33,10 +33,10 @@ namespace AmericaDefense
         public bool Active = false;
 
         private Random rand = new Random();
-        private Texture2D FootSoldiers;
-        private Rectangle rectangle;
-        private int p;
-        private Rectangle rectangle_2;
+        //private Texture2D FootSoldiers;
+        //private Rectangle rectangle;
+        //private int p;
+        //private Rectangle rectangle_2;
 
         //public NaziManager(Texture2D FootSoldiers, Rectangle rectangle, int p, Rectangle rectangle_2)
         //{
@@ -50,19 +50,19 @@ namespace AmericaDefense
         
             private void setUpWaypoints()
         {
-            List<Vector2> path0 = new List<Vector2>();
-            path0.Add(new Vector2(256, 256));
-            path0.Add(new Vector2(256, 128));
-            path0.Add(new Vector2(640, 128));
-            path0.Add(new Vector2(640, 768));
-            path0.Add(new Vector2(384, 768));
-            path0.Add(new Vector2(384, 512));
-            path0.Add(new Vector2(192, 512));
-            path0.Add(new Vector2(192, 960));
-            path0.Add(new Vector2(896, 960));
-            path0.Add(new Vector2(896, 832));
-            path0.Add(new Vector2(1152, 832));
-            pathWaypoints.Add(path0);
+            List<Vector2> path = new List<Vector2>();
+            path.Add(new Vector2(256, 256));
+            path.Add(new Vector2(256, 128));
+            path.Add(new Vector2(640, 128));
+            path.Add(new Vector2(640, 768));
+            path.Add(new Vector2(384, 768));
+            path.Add(new Vector2(384, 512));
+            path.Add(new Vector2(192, 512));
+            path.Add(new Vector2(192, 960));
+            path.Add(new Vector2(896, 960));
+            path.Add(new Vector2(896, 832));
+            path.Add(new Vector2(1152, 832));
+            pathWaypoints.Add(path);
             waveSpawns[0] = 0;
         }
         
@@ -80,7 +80,7 @@ namespace AmericaDefense
             setUpWaypoints();
         }
 
-        public void SpawnEnemy(int path)
+        public void SpawnNazi(int path)
         {
             Nazi thisEnemy = new Nazi(
                 texture,
@@ -109,7 +109,7 @@ namespace AmericaDefense
                     if (waveSpawns[x] > 0)
                     {
                         waveSpawns[x]--;
-                        SpawnEnemy(x);
+                        SpawnNazi(x);
                     }
                 }
                 naziSpawnTimer = 0f;

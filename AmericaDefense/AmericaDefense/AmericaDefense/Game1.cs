@@ -19,6 +19,11 @@ namespace AmericaDefense
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        enum Gamestates { TitleScreen, Playing }
+        Gamestates gameState = Gamestates.Playing;
+        //Gamestates gameState = Gamestates.TitleScreen;
+        Texture2D titleScreen;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Map map;
@@ -68,6 +73,7 @@ namespace AmericaDefense
             map.LoadTileSheets(mapDisplayDevice);
             viewport = new xTile.Dimensions.Rectangle(0, 0, 1280, 1280);
             FootSoldiers = Content.Load<Texture2D>("FootSoldiers");
+            titleScreen = Content.Load<Texture2D>("dday");
 
             naziManager = new NaziManager(
                 FootSoldiers,

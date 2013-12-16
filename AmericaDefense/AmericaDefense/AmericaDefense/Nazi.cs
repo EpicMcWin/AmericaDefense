@@ -50,30 +50,8 @@ namespace AmericaDefense
             currentWaypoint = location;
             NaziSprite.CollisionRadius = naziRadius;
         }
+
         
-        
-        private List<List<Vector2>> pathWaypoints =
-            new List<List<Vector2>>();
-        private Dictionary<int, int> waveSpawns = new Dictionary<int, int>();
-        
-        private void setUpWaypoints()
-        {
-            List<Vector2> path0 = new List<Vector2>();
-            path0.Add(new Vector2(284, 284));
-            path0.Add(new Vector2(284, 142));
-            path0.Add(new Vector2(781, 142));
-            path0.Add(new Vector2(781, 710));
-            path0.Add(new Vector2(568, 710));
-            path0.Add(new Vector2(426, 710));
-            path0.Add(new Vector2(426, 923));
-            path0.Add(new Vector2(852, 923));
-            path0.Add(new Vector2(852, 1065));
-            path0.Add(new Vector2(994, 1065));
-            path0.Add(new Vector2(994, 497));
-            path0.Add(new Vector2(1278, 497));
-            pathWaypoints.Add(path0);
-            waveSpawns[0] = 0;
-        }
         public void AddWaypoint(Vector2 waypoint)
         {
             waypoints.Enqueue(waypoint);
@@ -92,7 +70,25 @@ namespace AmericaDefense
             }
         }
 
-        
+        public bool IsActive()
+        {
+            if (Destroyed)
+            {
+                return false;
+            }
+
+            if (waypoints.Count > 0)
+            {
+                return true;
+            }
+
+            if (WaypointReached())
+            {
+                return false;
+            }
+
+            return true;
+        }
         
 
         public EnemyType type;
@@ -148,8 +144,41 @@ namespace AmericaDefense
                     break;
             }
         }
+        public override void Update(GameTime gameTime)
+        {
+            if (IsActive())
+            {
+                Vector2 heading = currentWaypoint - NaziSprite.Location;
+                if (heading != Vector2.Zero)
+                {
+                    heading.Normalize();
+                }
+                heading *= speed;
+                NaziSprite.Velocity = heading;
+                previousLocation = NaziSprite.Location;
+                NaziSprite.Update(gameTime);
+                NaziSprite.Rotation =
+                    (float)Math.Atan2(
+                    NaziSprite.Location.Y - previousLocation.Y,
+                    NaziSprite.Location.X - previousLocation.X);
 
-        
+                if (WaypointReached())
+                {
+                    if (waypoints.Count > 0)
+                    {
+                        currentWaypoint = waypoints.Dequeue();
+                    }
+                }
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            if (IsActive())
+            {
+                NaziSprite.Draw(spriteBatch);
+            }
+        }
 
         
     }
