@@ -17,6 +17,8 @@ namespace AmericaDefense
     /// <summary>
     /// This is the main type for your game
     /// </summary>
+    /// 
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         enum Gamestates { TitleScreen, Playing }
@@ -108,6 +110,9 @@ namespace AmericaDefense
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            MouseState ms = Mouse.GetState();
+            Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
+
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
             base.Update(gameTime);
@@ -120,9 +125,15 @@ namespace AmericaDefense
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightSteelBlue);
-            naziManager.Draw(spriteBatch);
-            // TODO: Add your drawing code here
+
             map.Draw(mapDisplayDevice, viewport);
+            
+            spriteBatch.Begin();
+            naziManager.Draw(spriteBatch);
+            spriteBatch.End();
+
+            // TODO: Add your drawing code here
+
             base.Draw(gameTime);
         }
     }

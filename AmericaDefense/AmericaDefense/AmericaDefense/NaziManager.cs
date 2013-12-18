@@ -30,7 +30,7 @@ namespace AmericaDefense
 
         private Dictionary<int, int> waveSpawns = new Dictionary<int, int>();
 
-        public bool Active = false;
+        public bool Active = true;
 
         private Random rand = new Random();
         //private Texture2D FootSoldiers;
@@ -51,11 +51,12 @@ namespace AmericaDefense
             private void setUpWaypoints()
         {
             List<Vector2> path = new List<Vector2>();
-            path.Add(new Vector2(256, 256));
-            path.Add(new Vector2(256, 128));
-            path.Add(new Vector2(640, 128));
-            path.Add(new Vector2(640, 768));
-            path.Add(new Vector2(384, 768));
+            path.Add(new Vector2(0, 220));
+            path.Add(new Vector2(211, 220));
+            path.Add(new Vector2(211, 90));
+            path.Add(new Vector2(585, 90));
+            path.Add(new Vector2(595, 710));
+            path.Add(new Vector2(346, 710));
             path.Add(new Vector2(384, 512));
             path.Add(new Vector2(192, 512));
             path.Add(new Vector2(192, 960));
@@ -78,6 +79,8 @@ namespace AmericaDefense
             this.frameCount = frameCount;
             
             setUpWaypoints();
+
+            SpawnWave(0);
         }
 
         public void SpawnNazi(int path)
@@ -158,6 +161,11 @@ namespace AmericaDefense
             if (Active)
             {
                 updateWaveSpawns(gameTime);
+
+                for (int i = Nazis.Count - 1; i >= 0; i--)
+                {
+                    Nazis[i].Update(gameTime);
+                }
             }
         }
 

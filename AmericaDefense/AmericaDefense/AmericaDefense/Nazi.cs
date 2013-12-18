@@ -24,10 +24,6 @@ namespace AmericaDefense
 
     class Nazi : Sprite
     {
-        public Sprite NaziSprite;
-        Texture2D FootSoldiers;
-        Texture2D Tanks;
-
         private int naziRadius = 15;
         private Vector2 previousLocation = Vector2.Zero;
         private Vector2 currentWaypoint = Vector2.Zero;
@@ -40,15 +36,11 @@ namespace AmericaDefense
             Vector2 velocity)
             : base(location, texture, initialFrame, velocity)
         {
-            NaziSprite = new Sprite(
-                location,
-                texture,
-                initialFrame,
-                Vector2.Zero);
-
+            this.speed = 150;
             previousLocation = location;
             currentWaypoint = location;
-            NaziSprite.CollisionRadius = naziRadius;
+            this.CollisionRadius = CollisionRadius;
+
         }
 
         
@@ -59,8 +51,8 @@ namespace AmericaDefense
 
         public bool WaypointReached()
         {
-            if (Vector2.Distance(NaziSprite.Location, currentWaypoint) <
-                (float)NaziSprite.Source.Width / 2)
+            if (Vector2.Distance(this.Location, currentWaypoint) <
+                (float)this.Source.Width / 2)
             {
                 return true;
             }
@@ -148,19 +140,19 @@ namespace AmericaDefense
         {
             if (IsActive())
             {
-                Vector2 heading = currentWaypoint - NaziSprite.Location;
+                Vector2 heading = currentWaypoint - this.Location;
                 if (heading != Vector2.Zero)
                 {
                     heading.Normalize();
                 }
                 heading *= speed;
-                NaziSprite.Velocity = heading;
-                previousLocation = NaziSprite.Location;
-                NaziSprite.Update(gameTime);
-                NaziSprite.Rotation =
+                this.Velocity = heading;
+                previousLocation = this.Location;
+               
+                this.Rotation =
                     (float)Math.Atan2(
-                    NaziSprite.Location.Y - previousLocation.Y,
-                    NaziSprite.Location.X - previousLocation.X);
+                    this.Location.Y - previousLocation.Y,
+                    this.Location.X - previousLocation.X);
 
                 if (WaypointReached())
                 {
@@ -169,14 +161,16 @@ namespace AmericaDefense
                         currentWaypoint = waypoints.Dequeue();
                     }
                 }
+
+                base.Update(gameTime);
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (IsActive())
             {
-                NaziSprite.Draw(spriteBatch);
+                base.Draw(spriteBatch);
             }
         }
 
