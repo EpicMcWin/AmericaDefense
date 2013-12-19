@@ -25,6 +25,7 @@ namespace AmericaDefense
         Gamestates gameState = Gamestates.Playing;
         //Gamestates gameState = Gamestates.TitleScreen;
         Texture2D titleScreen;
+        Nazi FootSoldier;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -86,6 +87,13 @@ namespace AmericaDefense
                     0,
                     this.Window.ClientBounds.Width,
                     this.Window.ClientBounds.Height));
+
+            FootSoldier = new Nazi(FootSoldiers, new Vector2(0, 220), new Rectangle(79, 51, 24, 26), Vector2.Zero);
+            FootSoldier.AddFrame(new Rectangle(104, 50, 24, 26));
+            FootSoldier.AddFrame(new Rectangle(130, 50, 24, 26));
+            FootSoldier.AddFrame(new Rectangle(104, 50, 24, 26));
+
+
             
             // TODO: use this.Content to load your game content here
         }
@@ -110,12 +118,14 @@ namespace AmericaDefense
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            MouseState ms = Mouse.GetState();
-            Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
+            //MouseState ms = Mouse.GetState();
+            //Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
 
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
+            FootSoldier.Update(gameTime);
             base.Update(gameTime);
+
         }
 
         /// <summary>
@@ -128,8 +138,10 @@ namespace AmericaDefense
 
             map.Draw(mapDisplayDevice, viewport);
             
+            
             spriteBatch.Begin();
             naziManager.Draw(spriteBatch);
+            FootSoldier.Draw(spriteBatch);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

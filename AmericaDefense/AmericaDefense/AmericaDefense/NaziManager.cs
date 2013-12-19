@@ -12,7 +12,7 @@ namespace AmericaDefense
         private Texture2D texture;
         private Rectangle initialFrame;
         private int frameCount;
-
+        
         public List<Nazi> Nazis = new List<Nazi>();
 
         //public ShotManager EnemyShotManager;
@@ -57,12 +57,12 @@ namespace AmericaDefense
             path.Add(new Vector2(585, 90));
             path.Add(new Vector2(595, 710));
             path.Add(new Vector2(346, 710));
-            path.Add(new Vector2(384, 512));
-            path.Add(new Vector2(192, 512));
-            path.Add(new Vector2(192, 960));
-            path.Add(new Vector2(896, 960));
-            path.Add(new Vector2(896, 832));
-            path.Add(new Vector2(1152, 832));
+            path.Add(new Vector2(346, 447));
+            path.Add(new Vector2(143, 447));
+            path.Add(new Vector2(143, 900));
+            path.Add(new Vector2(860, 900));
+            path.Add(new Vector2(860, 760));
+            path.Add(new Vector2(1215, 780));
             pathWaypoints.Add(path);
             waveSpawns[0] = 0;
         }
@@ -82,6 +82,8 @@ namespace AmericaDefense
 
             SpawnWave(0);
         }
+
+           
 
         public void SpawnNazi(int path)
         {

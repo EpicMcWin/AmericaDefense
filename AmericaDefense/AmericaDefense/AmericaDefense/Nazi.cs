@@ -36,13 +36,14 @@ namespace AmericaDefense
             Vector2 velocity)
             : base(location, texture, initialFrame, velocity)
         {
-            this.speed = 150;
+            this.speed = 100;
             previousLocation = location;
             currentWaypoint = location;
             this.CollisionRadius = CollisionRadius;
 
         }
 
+       
         
         public void AddWaypoint(Vector2 waypoint)
         {
