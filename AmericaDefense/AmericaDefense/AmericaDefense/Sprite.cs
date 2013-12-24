@@ -153,6 +153,10 @@ namespace AmericaDefense
         {
             frames.Add(frameRectangle);
         }
+        public void ClearFrames()
+        {
+            frames.Clear();
+        }
 
         public virtual void Update(GameTime gameTime)
         {

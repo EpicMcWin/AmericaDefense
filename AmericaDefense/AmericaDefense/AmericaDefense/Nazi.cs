@@ -21,6 +21,13 @@ namespace AmericaDefense
         TRANSPORTNAZI,
         SCOUT
     }
+    enum Direction
+    {
+        RIGHT,
+        UP,
+        DOWN,
+        LEFT
+    }
 
     class Nazi : Sprite
     {
@@ -28,7 +35,7 @@ namespace AmericaDefense
         private Vector2 previousLocation = Vector2.Zero;
         private Vector2 currentWaypoint = Vector2.Zero;
         private Queue<Vector2> waypoints = new Queue<Vector2>();
-
+        public Direction direction;
         public Nazi(
             Texture2D texture,
             Vector2 location,
@@ -52,8 +59,7 @@ namespace AmericaDefense
 
         public bool WaypointReached()
         {
-            if (Vector2.Distance(this.Location, currentWaypoint) <
-                (float)this.Source.Width / 2)
+            if (Vector2.Distance(this.Location, currentWaypoint) < 1)
             {
                 return true;
             }

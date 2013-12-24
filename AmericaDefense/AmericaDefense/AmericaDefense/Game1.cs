@@ -26,6 +26,7 @@ namespace AmericaDefense
         //Gamestates gameState = Gamestates.TitleScreen;
         Texture2D titleScreen;
         Nazi FootSoldier;
+        Rectangle initalFrame;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -68,7 +69,8 @@ namespace AmericaDefense
         /// </summary>
         protected override void LoadContent()
         {
-          
+            
+            
             // Create a new SpriteBatch, which can be used to draw textures.
             mapDisplayDevice = new XnaDisplayDevice(Content, GraphicsDevice);
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -81,20 +83,16 @@ namespace AmericaDefense
             naziManager = new NaziManager(
                 FootSoldiers,
                 new Rectangle(79, 51, 24, 26),
-                3,
+                20,
                 new Rectangle(
                     0,
                     0,
                     this.Window.ClientBounds.Width,
                     this.Window.ClientBounds.Height));
-
-            FootSoldier = new Nazi(FootSoldiers, new Vector2(0, 220), new Rectangle(79, 51, 24, 26), Vector2.Zero);
-            FootSoldier.AddFrame(new Rectangle(104, 50, 24, 26));
-            FootSoldier.AddFrame(new Rectangle(130, 50, 24, 26));
-            FootSoldier.AddFrame(new Rectangle(104, 50, 24, 26));
-
-
             
+
+
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -123,7 +121,7 @@ namespace AmericaDefense
 
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
-            FootSoldier.Update(gameTime);
+            
             base.Update(gameTime);
 
         }
@@ -141,7 +139,6 @@ namespace AmericaDefense
             
             spriteBatch.Begin();
             naziManager.Draw(spriteBatch);
-            FootSoldier.Draw(spriteBatch);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

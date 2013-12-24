@@ -7,13 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace AmericaDefense
 {
-    enum Direction
-    {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    }
+    
 
 
 
@@ -21,7 +15,7 @@ namespace AmericaDefense
     class NaziManager
     {
         private Texture2D texture;
-        private Rectangle initialFrame;
+        public Rectangle initialFrame;
         private int frameCount;
         
         public List<Nazi> Nazis = new List<Nazi>();
@@ -29,13 +23,13 @@ namespace AmericaDefense
         //public ShotManager EnemyShotManager;
        
 
-        public int MinNazisPerWave = 6;
+        public int MinNazisPerWave = 10;
         public int MaxNazisPerWave = 10;
         private float nextWaveTimer = 0.0f;
-        private float nextWaveMinTimer = 30.0f;
+        private float nextWaveMinTimer = 60.0f;
         private float naziSpawnTimer = 0.0f;
         private float naziSpawnWaitTime = 1;
-        Direction direction;
+        
 
         private List<List<Vector2>> pathWaypoints =
             new List<List<Vector2>>();
@@ -58,8 +52,8 @@ namespace AmericaDefense
             path.Add(new Vector2(143, 447));
             path.Add(new Vector2(143, 910));
             path.Add(new Vector2(860, 910));
-            path.Add(new Vector2(860, 760));
-            path.Add(new Vector2(1215, 780));
+            path.Add(new Vector2(860, 770));
+            path.Add(new Vector2(1215, 770));
             pathWaypoints.Add(path);
             waveSpawns[0] = 0;
         }
@@ -72,9 +66,20 @@ namespace AmericaDefense
             Rectangle screenBounds)
         {
             this.texture = texture;
-            this.initialFrame = initialFrame;
+            //this.initialFrame = initialFrame;
             this.frameCount = frameCount;
-            
+
+            for (int x = Nazis.Count - 1; x >= 0; x--)
+            {
+                if (Nazis[x].direction == Direction.RIGHT)
+                    this.initialFrame = new Rectangle(79, 51, 24, 26);
+                if (Nazis[x].direction == Direction.LEFT)
+                    this.initialFrame = new Rectangle(79, 25, 24, 26);
+                if (Nazis[x].direction == Direction.UP)
+                    this.initialFrame = new Rectangle(79, 77, 24, 26);
+                if (Nazis[x].direction == Direction.DOWN)
+                    this.initialFrame = new Rectangle(79, 0, 24, 26);
+            }
             setUpWaypoints();
 
             SpawnWave(0);
@@ -84,6 +89,7 @@ namespace AmericaDefense
 
         public void SpawnNazi(int path)
         {
+            
             Nazi footSoldier = new Nazi(
                 texture,
                 pathWaypoints[path][0],
@@ -94,37 +100,7 @@ namespace AmericaDefense
                 footSoldier.AddWaypoint(pathWaypoints[path][x]);
             }
 
-            if (footSoldier.Velocity.X > 0 && footSoldier.Velocity.Y == 0)
-                direction = Direction.RIGHT;
-            if (footSoldier.Velocity.X < 0)
-                direction = Direction.LEFT;
-            if (
-
-            switch (direction)
-            {
-                case Direction.RIGHT:
-                    footSoldier.AddFrame(new Rectangle(104, 50, 24, 26));
-                    footSoldier.AddFrame(new Rectangle(130, 50, 24, 26));
-                    footSoldier.AddFrame(new Rectangle(104, 50, 24, 26));
-                    break;
-
-                case Direction.LEFT:
-                    footSoldier.AddFrame(new Rectangle(79, 25, 24, 26));
-                    footSoldier.AddFrame(new Rectangle(130, 25, 24, 26));
-                    footSoldier.AddFrame(new Rectangle(104, 25, 24, 26));
-                    break;
-
-                case Direction.UP:
-
-                    break;
-
-                case Direction.DOWN:
-
-                    break;
-
-
-                   
-            }
+            
             Nazis.Add(footSoldier);
         }
 
@@ -160,7 +136,77 @@ namespace AmericaDefense
 
         public void Update(GameTime gameTime)
         {
+            for (int x = Nazis.Count - 1; x >= 0; x--)
+            {
+                
+                if (Nazis[x].Velocity.X > 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
+                {
+                    Nazis[x].ClearFrames();
+                    Nazis[x].direction = Direction.RIGHT;
+                    Nazis[x].AddFrame(new Rectangle(79, 50, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(130, 50, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(104, 50, 24, 26));
+                }
+
+                else if (Nazis[x].Velocity.X < 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
+                {
+                    Nazis[x].ClearFrames();
+                    Nazis[x].direction = Direction.LEFT;
+                    Nazis[x].AddFrame(new Rectangle(79, 25, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(130, 25, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(104, 25, 24, 26));
+                }
+
+                else if (Nazis[x].Velocity.Y < 0 && (Nazis[x].Velocity.X < 3 && Nazis[x].Velocity.X > -3))
+                {
+                    Nazis[x].ClearFrames();
+                    Nazis[x].direction = Direction.UP;
+                    Nazis[x].AddFrame(new Rectangle(79, 77, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(130, 77, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(104, 77, 24, 26));
+                }
+                else if (Nazis[x].Velocity.Y > 0 && (Nazis[x].Velocity.X < 3 && Nazis[x].Velocity.X > -3))
+                {
+                    Nazis[x].ClearFrames();
+                    Nazis[x].direction = Direction.DOWN;
+                    Nazis[x].AddFrame(new Rectangle(79, 0, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(130, 0, 24, 26));
+                    Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
+                }
+
+                //if (Nazis[x].WaypointReached() == true)
+                //{
+                //    Nazis[x].ClearFrames();
+                
+                //    switch (direction)
+                //    {
+                //        case Direction.RIGHT:
+                //            Nazis[x].AddFrame(new Rectangle(79, 50, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(130, 50, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(104, 50, 24, 26));
+                //            break;
+
+                //        case Direction.LEFT:
+                //            Nazis[x].AddFrame(new Rectangle(79, 25, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(130, 25, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(104, 25, 24, 26));
+                //            break;
+
+                //        case Direction.UP:
+                //            Nazis[x].AddFrame(new Rectangle(79, 77, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(130, 77, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(104, 77, 24, 26));
+                //            break;
+
+                //        case Direction.DOWN:
+                //            Nazis[x].AddFrame(new Rectangle(79, 0, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(130, 0, 24, 26));
+                //            Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
+                //            break;
+                //    }
+                //}
             
+            }
 
             //for (int x = Nazis.Count - 1; x >= 0; x--)
             //{
