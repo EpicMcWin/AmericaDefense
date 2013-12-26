@@ -117,6 +117,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Tower.cs" />
+    <Compile Include="TowerManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

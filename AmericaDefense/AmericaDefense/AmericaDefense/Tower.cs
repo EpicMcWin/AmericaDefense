@@ -22,8 +22,6 @@ namespace AmericaDefense
 
     class Tower : Sprite
     {
-        
-
         public Tower(
             Vector2 location,
             Texture2D texture,
@@ -44,7 +42,7 @@ namespace AmericaDefense
         public bool CanShootAircraft;
         public Nazi target;
 
-        public virtual void TowerStats(TowerType type)
+        public virtual void GetTowerStats(TowerType type)
         {
             switch (type)
             {
