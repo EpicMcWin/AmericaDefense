@@ -36,6 +36,7 @@ namespace AmericaDefense
         private Vector2 currentWaypoint = Vector2.Zero;
         private Queue<Vector2> waypoints = new Queue<Vector2>();
         public Direction direction;
+        public EnemyType type;
         public Nazi(
             Texture2D texture,
             Vector2 location,
@@ -90,13 +91,13 @@ namespace AmericaDefense
         }
         
 
-        public EnemyType type;
+        
         public int health;
         public int speed;
         public int value;
         public bool IsAircraft;
 
-        public virtual void EnemyStats(EnemyType type)
+        public void GetEnemyStats(EnemyType type)
         {
             switch (type)
             {

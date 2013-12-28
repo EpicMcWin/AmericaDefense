@@ -34,7 +34,9 @@ namespace AmericaDefense
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
         NaziManager naziManager;
+        TowerManager towerManager;
         Texture2D FootSoldiers;
+        Texture2D towers;
         
         
         public Game1()
@@ -78,18 +80,23 @@ namespace AmericaDefense
             map.LoadTileSheets(mapDisplayDevice);
             viewport = new xTile.Dimensions.Rectangle(0, 0, 1280, 1280);
             FootSoldiers = Content.Load<Texture2D>("FootSoldiers");
+            towers = Content.Load<Texture2D>("Towers");
             titleScreen = Content.Load<Texture2D>("dday");
 
             naziManager = new NaziManager(
                 FootSoldiers,
                 new Rectangle(79, 51, 24, 26),
-                20,
+                3,
                 new Rectangle(
                     0,
                     0,
                     this.Window.ClientBounds.Width,
                     this.Window.ClientBounds.Height));
-            
+
+
+            towerManager = new TowerManager(
+                towers,
+                new Rectangle(4, 3, 33, 46));
 
 
 
@@ -118,10 +125,10 @@ namespace AmericaDefense
 
             //MouseState ms = Mouse.GetState();
             //Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
-
+            
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
-            
+            towerManager.Update(gameTime);
             base.Update(gameTime);
 
         }
@@ -139,6 +146,7 @@ namespace AmericaDefense
             
             spriteBatch.Begin();
             naziManager.Draw(spriteBatch);
+            towerManager.Draw(spriteBatch);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

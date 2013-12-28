@@ -66,7 +66,6 @@ namespace AmericaDefense
             Rectangle screenBounds)
         {
             this.texture = texture;
-            //this.initialFrame = initialFrame;
             this.frameCount = frameCount;
 
             for (int x = Nazis.Count - 1; x >= 0; x--)
@@ -98,6 +97,7 @@ namespace AmericaDefense
             for (int x = 0; x < pathWaypoints[path].Count(); x++)
             {
                 footSoldier.AddWaypoint(pathWaypoints[path][x]);
+                footSoldier.GetEnemyStats(EnemyType.FOOTSOLDIER);
             }
 
             
@@ -174,37 +174,7 @@ namespace AmericaDefense
                     Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
                 }
 
-                //if (Nazis[x].WaypointReached() == true)
-                //{
-                //    Nazis[x].ClearFrames();
-                
-                //    switch (direction)
-                //    {
-                //        case Direction.RIGHT:
-                //            Nazis[x].AddFrame(new Rectangle(79, 50, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(130, 50, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(104, 50, 24, 26));
-                //            break;
-
-                //        case Direction.LEFT:
-                //            Nazis[x].AddFrame(new Rectangle(79, 25, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(130, 25, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(104, 25, 24, 26));
-                //            break;
-
-                //        case Direction.UP:
-                //            Nazis[x].AddFrame(new Rectangle(79, 77, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(130, 77, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(104, 77, 24, 26));
-                //            break;
-
-                //        case Direction.DOWN:
-                //            Nazis[x].AddFrame(new Rectangle(79, 0, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(130, 0, 24, 26));
-                //            Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
-                //            break;
-                //    }
-                //}
+               
             
             }
 
