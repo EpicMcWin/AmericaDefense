@@ -26,7 +26,9 @@ namespace AmericaDefense
         //Gamestates gameState = Gamestates.TitleScreen;
         Texture2D titleScreen;
         Nazi FootSoldier;
-        Rectangle initalFrame;
+        Rectangle initalFrame; 
+        ShotManager TowerShotManager;
+        Rectangle screenBounds;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -37,6 +39,7 @@ namespace AmericaDefense
         TowerManager towerManager;
         Texture2D FootSoldiers;
         Texture2D towers;
+        Texture2D projectiles;
         
         
         public Game1()
@@ -79,9 +82,12 @@ namespace AmericaDefense
             map = Content.Load<xTile.Map>("Background");
             map.LoadTileSheets(mapDisplayDevice);
             viewport = new xTile.Dimensions.Rectangle(0, 0, 1280, 1280);
+
+            projectiles = Content.Load<Texture2D>("New Projectiles");
             FootSoldiers = Content.Load<Texture2D>("FootSoldiers");
             towers = Content.Load<Texture2D>("Towers");
             titleScreen = Content.Load<Texture2D>("dday");
+            screenBounds = new Rectangle(0, 0, 1920, 1280);
 
             naziManager = new NaziManager(
                 FootSoldiers,
@@ -96,7 +102,16 @@ namespace AmericaDefense
 
             towerManager = new TowerManager(
                 towers,
-                new Rectangle(4, 3, 33, 46));
+                new Rectangle(4, 3, 33, 46),
+                screenBounds);
+
+            TowerShotManager = new ShotManager(
+               projectiles,
+               new Rectangle(18, 9, 6, 6),
+               4,
+               2,
+               250f,
+               screenBounds);
 
 
 
@@ -129,6 +144,7 @@ namespace AmericaDefense
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
             towerManager.Update(gameTime);
+            TowerShotManager.Update(gameTime);
             base.Update(gameTime);
 
         }
@@ -147,6 +163,7 @@ namespace AmericaDefense
             spriteBatch.Begin();
             naziManager.Draw(spriteBatch);
             towerManager.Draw(spriteBatch);
+            TowerShotManager.Draw(spriteBatch);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

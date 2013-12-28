@@ -36,8 +36,7 @@ namespace AmericaDefense
 
         public void FireShot(
             Vector2 location,
-            Vector2 velocity,
-            bool playerFired)
+            Vector2 velocity)
         {
             Sprite thisShot = new Sprite(
                 location,
@@ -46,19 +45,10 @@ namespace AmericaDefense
                 velocity);
 
             thisShot.Velocity *= shotSpeed;
-
-            for (int x = 1; x < FrameCount; x++)
-            {
-                thisShot.AddFrame(new Rectangle(
-                    InitialFrame.X + (InitialFrame.Width * x),
-                    InitialFrame.Y,
-                    InitialFrame.Width,
-                    InitialFrame.Height));
-            }
             thisShot.CollisionRadius = CollisionRadius;
             Shots.Add(thisShot);
 
-           
+            
         }
 
         public void Update(GameTime gameTime)

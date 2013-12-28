@@ -18,7 +18,7 @@ namespace AmericaDefense
         public Rectangle initialFrame;
         private int frameCount;
         
-        public List<Nazi> Nazis = new List<Nazi>();
+        public static List<Nazi> Nazis = new List<Nazi>();
 
         //public ShotManager EnemyShotManager;
        

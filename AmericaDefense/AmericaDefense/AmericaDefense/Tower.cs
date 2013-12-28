@@ -33,7 +33,7 @@ namespace AmericaDefense
         }
         public TowerType type;
 
-        public int range;
+        public int range = 100;
         public float fireRate;
         public int projectileSpeed;
         public int distance;
@@ -96,22 +96,30 @@ namespace AmericaDefense
             }
         }
 
-        public bool CanShoot(int range, int distance, bool aircraft)
+        public void ChooseTarget()
         {
-            if (range - distance >= 0 && CanShootAircraft == target.IsAircraft)
+            for (int x = NaziManager.Nazis.Count - 1; x >= 0; x--)
             {
-                return true;
-            }
-
-            else
-            {
-                return false;
+                if (((this.Center.X - NaziManager.Nazis[x].Center.X) * (this.Center.X - NaziManager.Nazis[x].Center.X) + (this.Center.Y - NaziManager.Nazis[x].Center.Y) * (this.Center.Y - NaziManager.Nazis[x].Center.Y)) <= this.range * this.range)
+                {
+                    NaziManager.Nazis[x] = target;
+                }
             }
         }
+        //public bool CanShoot(int range, int distance, bool aircraft)
+        //{
+        //    if (Na)
+        //    {
+        //        return true;
+        //    }
 
-        public void FireProjectile()
-        {
-        }
+        //    else
+        //    {
+        //        return false;
+        //    }
+        //}
+
+        
         
     }
 }

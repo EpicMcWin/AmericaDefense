@@ -103,7 +103,7 @@ namespace AmericaDefense
             {
                 case EnemyType.FOOTSOLDIER:
                     health = 100;
-                    speed = 50;
+                    speed = 150;
                     value = 20;
                     IsAircraft = false;
                     break;
