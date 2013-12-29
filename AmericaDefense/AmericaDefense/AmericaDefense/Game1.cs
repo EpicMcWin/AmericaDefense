@@ -39,7 +39,7 @@ namespace AmericaDefense
         TowerManager towerManager;
         Texture2D FootSoldiers;
         Texture2D towers;
-        Texture2D projectiles;
+        public static Texture2D projectiles;
         
         
         public Game1()
@@ -103,15 +103,16 @@ namespace AmericaDefense
             towerManager = new TowerManager(
                 towers,
                 new Rectangle(4, 3, 33, 46),
-                screenBounds);
+                screenBounds
+                );
 
-            TowerShotManager = new ShotManager(
-               projectiles,
-               new Rectangle(18, 9, 6, 6),
-               4,
-               2,
-               250f,
-               screenBounds);
+            //TowerShotManager = new ShotManager(
+            //   projectiles,
+            //   new Rectangle(18, 9, 6, 6),
+            //   4,
+            //   2,
+            //   250f,
+            //   screenBounds);
 
 
 
@@ -144,7 +145,7 @@ namespace AmericaDefense
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
             towerManager.Update(gameTime);
-            TowerShotManager.Update(gameTime);
+            towerManager.TowerShotManager.Update(gameTime);
             base.Update(gameTime);
 
         }
@@ -163,7 +164,6 @@ namespace AmericaDefense
             spriteBatch.Begin();
             naziManager.Draw(spriteBatch);
             towerManager.Draw(spriteBatch);
-            TowerShotManager.Draw(spriteBatch);
             spriteBatch.End();
 
             // TODO: Add your drawing code here

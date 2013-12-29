@@ -23,8 +23,8 @@ namespace AmericaDefense
         //public ShotManager EnemyShotManager;
        
 
-        public int MinNazisPerWave = 10;
-        public int MaxNazisPerWave = 10;
+        public int MinNazisPerWave = 1;
+        public int MaxNazisPerWave = 1;
         private float nextWaveTimer = 0.0f;
         private float nextWaveMinTimer = 60.0f;
         private float naziSpawnTimer = 0.0f;
@@ -174,7 +174,10 @@ namespace AmericaDefense
                     Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
                 }
 
-               
+                if (Nazis[x].Location.X >= 1215)
+                {
+                    Nazis.RemoveAt(x);
+                }
             
             }
 

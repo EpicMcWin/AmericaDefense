@@ -33,7 +33,7 @@ namespace AmericaDefense
         }
         public TowerType type;
 
-        public int range = 100;
+        public int range = 1000;
         public float fireRate;
         public int projectileSpeed;
         public int distance;

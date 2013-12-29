@@ -14,13 +14,14 @@ namespace AmericaDefense
     class TowerManager
     {
         private Texture2D texture;
+        private Texture2D projectileTextures;
         public Rectangle frame;
         MouseState ms;
         public static List<Tower> Towers = new List<Tower>();
         float TimeBetweenPurchases = 0.5f;
         float TimeSinceLastPurchase = 0f;
-        ShotManager TowerShotManager;
-        float distanceFromTarget;
+        public ShotManager TowerShotManager;
+        Vector2 shotDirection;
         
 
         public TowerManager(
@@ -30,7 +31,18 @@ namespace AmericaDefense
         {
             this.texture = texture;
             this.frame = frame;
+
+            TowerShotManager = new ShotManager(
+               Game1.projectiles,
+               new Rectangle(18, 9, 6, 6),
+               4,
+               2,
+               250f,
+               screenBounds);
+            
         }
+
+        
 
 
         public void SpawnTower()
@@ -51,6 +63,8 @@ namespace AmericaDefense
 
         public void Update(GameTime gametime)
         {
+            TowerShotManager.Update(gametime);
+
             TimeSinceLastPurchase += (float)gametime.ElapsedGameTime.TotalSeconds;
             ms = Mouse.GetState();
             KeyboardState keyState = Keyboard.GetState();
@@ -100,21 +114,45 @@ namespace AmericaDefense
                     SpawnTower();
                     TimeSinceLastPurchase = 0f;
                 }
+
             for (int x = Towers.Count - 1; x >= 0; x--)
             {
-                if (Towers[x].target != null)
+                for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
                 {
-                    TowerShotManager.FireShot(
-                        Towers[x].Center,
-                        new Vector2(0, 250));
-                }
+                    Tower thisTower = Towers[x];
+                    Nazi thisNazi = NaziManager.Nazis[y];
 
+                    if (NaziManager.Nazis.Count == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        if (Math.Pow((thisTower.Center.X - thisNazi.Center.X), 2) + Math.Pow((thisTower.Center.Y - thisNazi.Center.Y), 2) <= Math.Pow((thisTower.range), 2))
+                        {
+                            Vector2 enemyPos = thisNazi.Center;
+                            float distance = Vector2.Distance(thisNazi.Center, thisTower.Center);
+                            float timeShot = distance / 250;
+                            float sNazi = timeShot * thisNazi.speed;
+                            Vector2 enemyDirection = thisNazi.Velocity;
+                            enemyDirection.Normalize();
+                            enemyPos += (sNazi * enemyDirection) / 2;
+
+                            shotDirection = (enemyPos - thisTower.Location);
+                            shotDirection.Normalize();
+                            TowerShotManager.FireShot(
+                                thisTower.Center,
+                                shotDirection);
+                        }
+                    }
+                }
                 
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            TowerShotManager.Draw(spriteBatch);
             foreach (Tower tower in Towers)
             {
                 tower.Draw(spriteBatch);
