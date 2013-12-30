@@ -33,14 +33,12 @@ namespace AmericaDefense
         }
         public TowerType type;
 
-        public int range = 1000;
+        public int range;
         public float fireRate;
         public int projectileSpeed;
-        public int distance;
         public int cost;
         public int damage;
         public bool CanShootAircraft;
-        public Nazi target;
 
         public virtual void GetTowerStats(TowerType type)
         {
@@ -50,7 +48,8 @@ namespace AmericaDefense
                     cost = 100;
                     fireRate = 1;
                     damage = 40;
-                    range = 100;
+                    range = 250;
+                    projectileSpeed = 250;
                     CanShootAircraft = false;
                     break;
 
@@ -58,7 +57,8 @@ namespace AmericaDefense
                     cost = 300;
                     fireRate = .2f;
                     damage = 15;
-                    range = 100;
+                    range = 250;
+                    projectileSpeed = 250;
                     CanShootAircraft = false;
                     break;
 
@@ -66,7 +66,8 @@ namespace AmericaDefense
                     cost = 400;
                     fireRate = 2;
                     damage = 250;
-                    range = 100;
+                    range = 250;
+                    projectileSpeed = 150;
                     CanShootAircraft = false;
                     break;
 
@@ -74,7 +75,8 @@ namespace AmericaDefense
                     cost = 300;
                     fireRate = 3;
                     damage = 150;
-                    range = 400;
+                    range = 750;
+                    projectileSpeed = 750;
                     CanShootAircraft = false;
                     break;
 
@@ -82,7 +84,8 @@ namespace AmericaDefense
                     cost = 300;
                     fireRate = .1f;
                     damage = 10;
-                    range = 200;
+                    range = 350;
+                    projectileSpeed = 400;
                     CanShootAircraft = true;
                     break;
 
@@ -90,36 +93,11 @@ namespace AmericaDefense
                     cost = 500;
                     fireRate = .1f;
                     damage = 10;
-                    range = 50;
+                    range = 100;
+                    projectileSpeed = 100;
                     CanShootAircraft = false;
                     break;
             }
         }
-
-        public void ChooseTarget()
-        {
-            for (int x = NaziManager.Nazis.Count - 1; x >= 0; x--)
-            {
-                if (((this.Center.X - NaziManager.Nazis[x].Center.X) * (this.Center.X - NaziManager.Nazis[x].Center.X) + (this.Center.Y - NaziManager.Nazis[x].Center.Y) * (this.Center.Y - NaziManager.Nazis[x].Center.Y)) <= this.range * this.range)
-                {
-                    NaziManager.Nazis[x] = target;
-                }
-            }
-        }
-        //public bool CanShoot(int range, int distance, bool aircraft)
-        //{
-        //    if (Na)
-        //    {
-        //        return true;
-        //    }
-
-        //    else
-        //    {
-        //        return false;
-        //    }
-        //}
-
-        
-        
     }
 }

@@ -14,14 +14,15 @@ namespace AmericaDefense
     class TowerManager
     {
         private Texture2D texture;
-        private Texture2D projectileTextures;
         public Rectangle frame;
         MouseState ms;
         public static List<Tower> Towers = new List<Tower>();
         float TimeBetweenPurchases = 0.5f;
         float TimeSinceLastPurchase = 0f;
+        float TimeSinceLastShot;
         public ShotManager TowerShotManager;
         Vector2 shotDirection;
+        private Vector2 offScreen = new Vector2(-500, -500);
         
 
         public TowerManager(
@@ -36,16 +37,16 @@ namespace AmericaDefense
                Game1.projectiles,
                new Rectangle(18, 9, 6, 6),
                4,
-               2,
+               20,
                250f,
                screenBounds);
             
         }
 
-        
 
 
-        public void SpawnTower()
+
+        public void SpawnTower(TowerType type)
         {
             Tower tower = new Tower(
                 new Vector2(ms.X, ms.Y) -
@@ -54,7 +55,35 @@ namespace AmericaDefense
                 frame,
                 Vector2.Zero);
 
-            Towers.Add(tower);
+            switch (type)
+            {
+                case TowerType.RIFLE:
+                    tower.GetTowerStats(TowerType.RIFLE);
+                    break;
+
+                case TowerType.MG:
+                    tower.GetTowerStats(TowerType.MG);
+                    break;
+
+                case TowerType.BAZOOKA:
+                    tower.GetTowerStats(TowerType.BAZOOKA);
+                    break;
+
+                case TowerType.SNIPER:
+                    tower.GetTowerStats(TowerType.SNIPER);
+                    break;
+
+                case TowerType.AAGUN:
+                    tower.GetTowerStats(TowerType.AAGUN);
+                    break;
+
+                case TowerType.FLAMETHROWER:
+                    tower.GetTowerStats(TowerType.FLAMETHROWER);
+                    break;
+            }
+
+                Towers.Add(tower);
+            
         }
 
         
@@ -64,7 +93,7 @@ namespace AmericaDefense
         public void Update(GameTime gametime)
         {
             TowerShotManager.Update(gametime);
-
+            TimeSinceLastShot += (float)gametime.ElapsedGameTime.TotalSeconds;
             TimeSinceLastPurchase += (float)gametime.ElapsedGameTime.TotalSeconds;
             ms = Mouse.GetState();
             KeyboardState keyState = Keyboard.GetState();
@@ -72,7 +101,7 @@ namespace AmericaDefense
             if (keyState.IsKeyDown(Keys.D1) && TimeSinceLastPurchase > TimeBetweenPurchases)
                 {
                     this.frame = new Rectangle(4, 3, 33, 46);
-                    SpawnTower();
+                    SpawnTower(TowerType.RIFLE);
                     TimeSinceLastPurchase = 0f;
                     
                 }
@@ -80,40 +109,39 @@ namespace AmericaDefense
             else if (keyState.IsKeyDown(Keys.D2) && TimeSinceLastPurchase > TimeBetweenPurchases)
                 {
                     this.frame = new Rectangle(45, 9, 35, 40);
-                   
-                    SpawnTower();
+                    SpawnTower(TowerType.MG);
                     TimeSinceLastPurchase = 0f;
                 }
 
             else if (keyState.IsKeyDown(Keys.D3) && TimeSinceLastPurchase > TimeBetweenPurchases)
                 {
                     this.frame = new Rectangle(87, 8, 40, 55);
-                    
-                    SpawnTower();
+                    SpawnTower(TowerType.BAZOOKA);
                     TimeSinceLastPurchase = 0f;
                 }
 
             else if (keyState.IsKeyDown(Keys.D4) && TimeSinceLastPurchase > TimeBetweenPurchases)
                 {
                     this.frame = new Rectangle(135, 7, 19, 47);
-                   
-                    SpawnTower();
+                    SpawnTower(TowerType.SNIPER);
                     TimeSinceLastPurchase = 0f;
                 }
 
             else if (keyState.IsKeyDown(Keys.D5) && TimeSinceLastPurchase > TimeBetweenPurchases)
                 {
                     this.frame = new Rectangle(161, 11, 37, 39);
-                    SpawnTower();
+                    SpawnTower(TowerType.FLAMETHROWER);
                     TimeSinceLastPurchase = 0f;
                 }
 
             else if (keyState.IsKeyDown(Keys.D6) && TimeSinceLastPurchase > TimeBetweenPurchases)
                 {
                     this.frame = new Rectangle(206, 8, 32, 48);
-                    SpawnTower();
+                    SpawnTower(TowerType.AAGUN);
                     TimeSinceLastPurchase = 0f;
                 }
+
+
 
             for (int x = Towers.Count - 1; x >= 0; x--)
             {
@@ -124,15 +152,15 @@ namespace AmericaDefense
 
                     if (NaziManager.Nazis.Count == 0)
                     {
-
+                        //do nothing
                     }
                     else
                     {
-                        if (Math.Pow((thisTower.Center.X - thisNazi.Center.X), 2) + Math.Pow((thisTower.Center.Y - thisNazi.Center.Y), 2) <= Math.Pow((thisTower.range), 2))
+                        if (Math.Pow((thisTower.Center.X - thisNazi.Center.X), 2) + Math.Pow((thisTower.Center.Y - thisNazi.Center.Y), 2) <= Math.Pow((thisTower.range), 2) && TimeSinceLastShot > thisTower.fireRate)
                         {
                             Vector2 enemyPos = thisNazi.Center;
                             float distance = Vector2.Distance(thisNazi.Center, thisTower.Center);
-                            float timeShot = distance / 250;
+                            float timeShot = distance / thisTower.projectileSpeed;
                             float sNazi = timeShot * thisNazi.speed;
                             Vector2 enemyDirection = thisNazi.Velocity;
                             enemyDirection.Normalize();
@@ -140,13 +168,36 @@ namespace AmericaDefense
 
                             shotDirection = (enemyPos - thisTower.Location);
                             shotDirection.Normalize();
+
+                            TowerShotManager.shotSpeed = thisTower.projectileSpeed;
                             TowerShotManager.FireShot(
                                 thisTower.Center,
                                 shotDirection);
+
+                            TimeSinceLastShot = 0;
+
+                            foreach (Sprite shot in TowerShotManager.Shots)
+                            {
+                                foreach (Nazi nazi in NaziManager.Nazis)
+                                {
+                                    if (shot.IsCircleColliding(
+                                        nazi.Center,
+                                        nazi.CollisionRadius) == true)
+                                    {
+                                        shot.Location = offScreen;
+                                        nazi.Destroyed = true;
+                                        nazi.health -= thisTower.damage;
+                                        //playerManager.PlayerScore += NaziPointValue;
+                                    }
+                                    else
+                                    {
+                                        //lol i dunno
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                
             }
         }
 

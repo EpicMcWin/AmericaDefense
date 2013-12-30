@@ -31,7 +31,7 @@ namespace AmericaDefense
 
     class Nazi : Sprite
     {
-        private int naziRadius = 15;
+        private int naziRadius = 40;
         private Vector2 previousLocation = Vector2.Zero;
         private Vector2 currentWaypoint = Vector2.Zero;
         private Queue<Vector2> waypoints = new Queue<Vector2>();
@@ -47,7 +47,7 @@ namespace AmericaDefense
             this.speed = 100;
             previousLocation = location;
             currentWaypoint = location;
-            this.CollisionRadius = CollisionRadius;
+            CollisionRadius = this.naziRadius;
 
         }
 

@@ -15,7 +15,7 @@ namespace AmericaDefense
         private static Texture2D Texture;
         private static Rectangle InitialFrame;
         private static int FrameCount;
-        private float shotSpeed;
+        public float shotSpeed;
         private static int CollisionRadius;
 
         public ShotManager(
