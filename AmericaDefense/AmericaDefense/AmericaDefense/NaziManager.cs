@@ -14,7 +14,7 @@ namespace AmericaDefense
         private int frameCount;
         
         public static List<Nazi> Nazis = new List<Nazi>();
-
+        public static List<Nazi> NazisinRange = new List<Nazi>();
         //public ShotManager EnemyShotManager;
        
 
@@ -173,7 +173,16 @@ namespace AmericaDefense
                 {
                     Nazis.RemoveAt(x);
                 }
+                
             
+            }
+
+            for (int x = NazisinRange.Count - 1; x >= 0; x--)
+            {
+                if (NazisinRange[x].inRange == false || NazisinRange[x].health <= 0)
+                {
+                    NazisinRange.RemoveAt(x);
+                }
             }
 
             //for (int x = Nazis.Count - 1; x >= 0; x--)

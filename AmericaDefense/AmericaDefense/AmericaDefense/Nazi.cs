@@ -89,9 +89,9 @@ namespace AmericaDefense
 
             return true;
         }
-        
 
-        
+
+        public bool inRange;
         public int health;
         public int speed;
         public int value;
@@ -171,6 +171,19 @@ namespace AmericaDefense
                 }
 
                 base.Update(gameTime);
+            }
+
+
+              for (int x = TowerManager.Towers.Count - 1; x >= 0; x--)
+              {
+                for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
+                {
+                    if (Math.Pow((TowerManager.Towers[x].Center.X - NaziManager.Nazis[y].Center.X), 2) + Math.Pow((TowerManager.Towers[x].Center.Y - NaziManager.Nazis[y].Center.Y), 2) <= Math.Pow((TowerManager.Towers[x].range), 2))
+                    {
+                        inRange = true;
+                    }
+
+                }
             }
         }
 

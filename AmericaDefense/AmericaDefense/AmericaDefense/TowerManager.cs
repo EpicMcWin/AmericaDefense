@@ -23,6 +23,7 @@ namespace AmericaDefense
         public ShotManager TowerShotManager;
         Vector2 shotDirection;
         private Vector2 offScreen = new Vector2(-500, -500);
+        Nazi target;
         
 
         public TowerManager(
@@ -87,7 +88,7 @@ namespace AmericaDefense
         }
 
         
-
+        int counter = 0;
 
 
         public void Update(GameTime gametime)
@@ -149,49 +150,56 @@ namespace AmericaDefense
                 {
                     Tower thisTower = Towers[x];
                     Nazi thisNazi = NaziManager.Nazis[y];
-
+                    target = null;
+                    
                     if (NaziManager.Nazis.Count == 0)
                     {
                         //do nothing
                     }
                     else
                     {
-                        if (Math.Pow((thisTower.Center.X - thisNazi.Center.X), 2) + Math.Pow((thisTower.Center.Y - thisNazi.Center.Y), 2) <= Math.Pow((thisTower.range), 2) && TimeSinceLastShot > thisTower.fireRate)
+                        if (target == null)
                         {
-                            Vector2 enemyPos = thisNazi.Center;
-                            float distance = Vector2.Distance(thisNazi.Center, thisTower.Center);
-                            float timeShot = distance / thisTower.projectileSpeed;
-                            float sNazi = timeShot * thisNazi.speed;
-                            Vector2 enemyDirection = thisNazi.Velocity;
-                            enemyDirection.Normalize();
-                            enemyPos += (sNazi * enemyDirection) / 2;
-
-                            shotDirection = (enemyPos - thisTower.Location);
-                            shotDirection.Normalize();
-
-                            TowerShotManager.shotSpeed = thisTower.projectileSpeed;
-                            TowerShotManager.FireShot(
-                                thisTower.Center,
-                                shotDirection);
-
-                            TimeSinceLastShot = 0;
-
-                            foreach (Sprite shot in TowerShotManager.Shots)
+                            if (thisNazi.inRange && TimeSinceLastShot > thisTower.fireRate)
                             {
-                                foreach (Nazi nazi in NaziManager.Nazis)
+                                NaziManager.NazisinRange.Add(thisNazi);
+                                target = NaziManager.NazisinRange.First();
+                                Vector2 enemyPos = target.Center;
+                                float distance = Vector2.Distance(target.Center, thisTower.Center);
+                                float timeShot = distance / thisTower.projectileSpeed;
+                                float sNazi = timeShot * target.speed;
+                                Vector2 enemyDirection = target.Velocity;
+                                enemyDirection.Normalize();
+                                enemyPos += (sNazi * enemyDirection) / 2;
+
+                                shotDirection = (enemyPos - thisTower.Location);
+                                shotDirection.Normalize();
+
+                                TowerShotManager.shotSpeed = thisTower.projectileSpeed;
+                                TowerShotManager.FireShot(
+                                    thisTower.Center,
+                                    shotDirection);
+
+                                TimeSinceLastShot = 0;
+
+
+                                foreach (Sprite shot in TowerShotManager.Shots)
                                 {
-                                    if (shot.IsCircleColliding(
-                                        nazi.Center,
-                                        nazi.CollisionRadius) == true)
+                                    foreach (Nazi nazi in NaziManager.NazisinRange)
                                     {
-                                        shot.Location = offScreen;
-                                        nazi.Destroyed = true;
-                                        nazi.health -= thisTower.damage;
-                                        //playerManager.PlayerScore += NaziPointValue;
-                                    }
-                                    else
-                                    {
-                                        //lol i dunno
+                                        if (shot.IsCircleColliding(
+                                            nazi.Center,
+                                            nazi.CollisionRadius) == true)
+                                        {
+                                            shot.Location = offScreen;
+                                            nazi.health -= thisTower.damage;
+                                            counter += 1;
+                                            //playerManager.PlayerScore += NaziPointValue;
+                                        }
+                                        else
+                                        {
+                                            //lol i dunno
+                                        }
                                     }
                                 }
                             }
