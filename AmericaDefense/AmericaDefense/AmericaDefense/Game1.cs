@@ -102,8 +102,7 @@ namespace AmericaDefense
 
             towerManager = new TowerManager(
                 towers,
-                new Rectangle(4, 3, 33, 46),
-                screenBounds
+                new Rectangle(4, 3, 33, 46)
                 );
 
             //TowerShotManager = new ShotManager(
@@ -145,7 +144,7 @@ namespace AmericaDefense
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
             towerManager.Update(gameTime);
-            towerManager.TowerShotManager.Update(gameTime);
+            //TowerShotManager.Update(gameTime);
             base.Update(gameTime);
 
         }

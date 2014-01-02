@@ -178,6 +178,7 @@ namespace AmericaDefense
               {
                 for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
                 {
+                    
                     if (Math.Pow((TowerManager.Towers[x].Center.X - NaziManager.Nazis[y].Center.X), 2) + Math.Pow((TowerManager.Towers[x].Center.Y - NaziManager.Nazis[y].Center.Y), 2) <= Math.Pow((TowerManager.Towers[x].range), 2))
                     {
                         inRange = true;
