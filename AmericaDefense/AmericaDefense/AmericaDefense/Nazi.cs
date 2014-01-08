@@ -31,12 +31,11 @@ namespace AmericaDefense
 
     class Nazi : Sprite
     {
-        private int naziRadius = 40;
+        private int naziRadius = 30;
         private Vector2 previousLocation = Vector2.Zero;
         private Vector2 currentWaypoint = Vector2.Zero;
         private Queue<Vector2> waypoints = new Queue<Vector2>();
         public Direction direction;
-        public EnemyType type;
         public Nazi(
             Texture2D texture,
             Vector2 location,

@@ -20,9 +20,8 @@ namespace AmericaDefense
         float TimeBetweenPurchases = 0.5f;
         float TimeSinceLastPurchase = 0f;
         
-        public ShotManager TowerShotManager;
+        
         private Vector2 offScreen = new Vector2(-500, -500);
-        Nazi target;
         
 
         public TowerManager(
@@ -75,7 +74,6 @@ namespace AmericaDefense
         }
 
         
-        int counter = 0;
 
 
         public void Update(GameTime gametime)
@@ -132,6 +130,8 @@ namespace AmericaDefense
 
             for (int x = Towers.Count - 1; x >= 0; x--)
             {
+                Towers[x].Update(gametime);
+
                 for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
                 {
                     Towers[x].Shoot(NaziManager.Nazis[y]);

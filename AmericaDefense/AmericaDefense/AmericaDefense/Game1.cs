@@ -25,9 +25,6 @@ namespace AmericaDefense
         Gamestates gameState = Gamestates.Playing;
         //Gamestates gameState = Gamestates.TitleScreen;
         Texture2D titleScreen;
-        Nazi FootSoldier;
-        Rectangle initalFrame; 
-        ShotManager TowerShotManager;
         Rectangle screenBounds;
 
         GraphicsDeviceManager graphics;

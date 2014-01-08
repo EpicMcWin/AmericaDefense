@@ -23,7 +23,6 @@ namespace AmericaDefense
     class Tower : Sprite
     {
         Rectangle screenBounds;
-        public TowerType type;
         public ShotManager TowerShotManager;
         public int range;
         public float fireRate;
@@ -48,7 +47,7 @@ namespace AmericaDefense
                Game1.projectiles,
                new Rectangle(18, 9, 6, 6),
                4,
-               20,
+               6,
                250f,
                screenBounds);
         }
@@ -59,11 +58,11 @@ namespace AmericaDefense
 
         public void Shoot(Nazi target)
         {
-            if (Vector2.Distance(this.Center, target.Center) <= range)
+            if (Vector2.Distance(this.Center, target.Center) <= range && TimeSinceLastShot > fireRate)
             {
                 Vector2 enemyPos = target.Center;
-                float distance = Vector2.Distance(target.Center, Center);
-                float timeShot = distance / projectileSpeed;
+                float distance = Vector2.Distance(target.Center, this.Center);
+                float timeShot = distance / this.projectileSpeed;
                 float distNazi = timeShot * target.speed;
                 Vector2 enemyDirection = target.Velocity;
                 enemyDirection.Normalize();
@@ -75,28 +74,10 @@ namespace AmericaDefense
                 TimeSinceLastShot = 0;
                 TowerShotManager.shotSpeed = projectileSpeed;
                 TowerShotManager.FireShot(
-                    Center,
+                    this.Center,
                     shotDirection);
 
-                foreach (Sprite shot in TowerShotManager.Shots)
-                {
-                    foreach (Nazi nazi in NaziManager.NazisinRange)
-                    {
-                        if (shot.IsCircleColliding(
-                            nazi.Center,
-                            nazi.CollisionRadius) == true)
-                        {
-                            shot.Location = offScreen;
-                            shot.Velocity = new Vector2(0, 0);
-                            nazi.health -= damage;
-                            //playerManager.PlayerScore += NaziPointValue;
-                        }
-                        else
-                        {
-                            //lol i dunno
-                        }
-                    }
-                }
+               
             }
         }
 
@@ -159,13 +140,37 @@ namespace AmericaDefense
                     break;
             }
         }
-        public void Update(GameTime gametime)
+        public override void Update(GameTime gametime)
         {
             TimeSinceLastShot += (float)gametime.ElapsedGameTime.TotalSeconds;
             TowerShotManager.Update(gametime);
+
+            foreach (Sprite shot in TowerShotManager.Shots)
+            {
+                foreach (Nazi nazi in NaziManager.Nazis)
+                {
+                    if (shot.IsCircleColliding(
+                        nazi.Center,
+                        nazi.CollisionRadius) == true)
+                    {
+                        shot.Location = offScreen;
+                        shot.Velocity = new Vector2(0, 0);
+                        nazi.health -= damage;
+                        //playerManager.PlayerScore += NaziPointValue;
+                    }
+                    else
+                    {
+                        //  _         _
+                        //   \_(o_o)_/    LOL I DUNNO
+                        //       |   
+                        //       |
+                        //      / \
+                    }
+                }
+            }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             TowerShotManager.Draw(spriteBatch);
             base.Draw(spriteBatch);
