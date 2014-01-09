@@ -173,12 +173,17 @@ namespace AmericaDefense
                 {
                     Nazis.RemoveAt(x);
                 }
-                
+
+                if (Nazis[x].inRange == true)
+                {
+                    NazisinRange.Add(Nazis[x]);
+                }
             
             }
 
             for (int x = NazisinRange.Count - 1; x >= 0; x--)
             {
+                
                 if (NazisinRange[x].inRange == false || NazisinRange[x].health <= 0)
                 {
                     NazisinRange.RemoveAt(x);

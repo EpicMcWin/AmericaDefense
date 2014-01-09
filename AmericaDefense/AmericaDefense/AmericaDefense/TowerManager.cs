@@ -132,29 +132,9 @@ namespace AmericaDefense
             {
                 Towers[x].Update(gametime);
 
-                for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
+                for (int y = NaziManager.NazisinRange.Count - 1; y >= 0; y--)
                 {
-                    Towers[x].Shoot(NaziManager.Nazis[y]);
-
-                    //foreach (Sprite shot in TowerShotManager.Shots)
-                    //{
-                    //    foreach (Nazi nazi in NaziManager.NazisinRange)
-                    //    {
-                    //        if (shot.IsCircleColliding(
-                    //            nazi.Center,
-                    //            nazi.CollisionRadius) == true)
-                    //        {
-                    //            shot.Location = offScreen;
-                    //            nazi.health -= Towers[x].damage;
-                    //            counter += 1;
-                    //            //playerManager.PlayerScore += NaziPointValue;
-                    //        }
-                    //        else
-                    //        {
-                    //            //lol i dunno
-                    //        }
-                    //    }
-                    //}
+                    Towers[x].Shoot(NaziManager.NazisinRange.First());
                 }
             }
         }

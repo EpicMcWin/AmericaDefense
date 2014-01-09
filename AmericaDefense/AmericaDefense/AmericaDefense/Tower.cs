@@ -160,11 +160,11 @@ namespace AmericaDefense
                     }
                     else
                     {
-                        //  _         _
-                        //   \_(o_o)_/    LOL I DUNNO
-                        //       |   
-                        //       |
-                        //      / \
+                          //_         _
+                          // \_(o_o)_/    LOL I DUNNO
+                          //     |   
+                          //     |
+                          //    / \
                     }
                 }
             }

@@ -145,6 +145,7 @@ namespace AmericaDefense
         }
         public override void Update(GameTime gameTime)
         {
+            
             if (IsActive())
             {
                 Vector2 heading = currentWaypoint - this.Location;
@@ -177,10 +178,13 @@ namespace AmericaDefense
               {
                 for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
                 {
-                    
-                    if (Math.Pow((TowerManager.Towers[x].Center.X - NaziManager.Nazis[y].Center.X), 2) + Math.Pow((TowerManager.Towers[x].Center.Y - NaziManager.Nazis[y].Center.Y), 2) <= Math.Pow((TowerManager.Towers[x].range), 2))
+                    if (Vector2.Distance(TowerManager.Towers[x].Center, NaziManager.Nazis[y].Center) <= TowerManager.Towers[x].range)
                     {
                         inRange = true;
+                    }
+                    else
+                    {
+                        inRange = false;
                     }
 
                 }
