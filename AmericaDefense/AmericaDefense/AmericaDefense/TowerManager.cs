@@ -132,9 +132,9 @@ namespace AmericaDefense
             {
                 Towers[x].Update(gametime);
 
-                for (int y = NaziManager.NazisinRange.Count - 1; y >= 0; y--)
+                for (int y = NaziManager.naziTargets.Count - 1; y >= 0; y--)
                 {
-                    Towers[x].Shoot(NaziManager.NazisinRange.First());
+                    Towers[x].Shoot(NaziManager.naziTargets.Peek());
                 }
             }
         }

@@ -15,6 +15,7 @@ namespace AmericaDefense
         
         public static List<Nazi> Nazis = new List<Nazi>();
         public static List<Nazi> NazisinRange = new List<Nazi>();
+        public static Queue<Nazi> naziTargets = new Queue<Nazi>();
         //public ShotManager EnemyShotManager;
        
 
@@ -131,53 +132,69 @@ namespace AmericaDefense
 
         public void Update(GameTime gameTime)
         {
-            for (int x = Nazis.Count - 1; x >= 0; x--)
+            if (Nazis.Count > 0)
             {
-                
-                if (Nazis[x].Velocity.X > 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
+                for (int x = Nazis.Count - 1; x >= 0; x--)
                 {
-                    Nazis[x].ClearFrames();
-                    Nazis[x].direction = Direction.RIGHT;
-                    Nazis[x].AddFrame(new Rectangle(79, 50, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(130, 50, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(104, 50, 24, 26));
-                }
 
-                else if (Nazis[x].Velocity.X < 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
-                {
-                    Nazis[x].ClearFrames();
-                    Nazis[x].direction = Direction.LEFT;
-                    Nazis[x].AddFrame(new Rectangle(79, 25, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(130, 25, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(104, 25, 24, 26));
-                }
+                    if (Nazis[x].Velocity.X > 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
+                    {
+                        Nazis[x].ClearFrames();
+                        Nazis[x].direction = Direction.RIGHT;
+                        Nazis[x].AddFrame(new Rectangle(79, 50, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(130, 50, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(104, 50, 24, 26));
+                    }
 
-                else if (Nazis[x].Velocity.Y < 0 && (Nazis[x].Velocity.X < 3 && Nazis[x].Velocity.X > -3))
-                {
-                    Nazis[x].ClearFrames();
-                    Nazis[x].direction = Direction.UP;
-                    Nazis[x].AddFrame(new Rectangle(79, 77, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(130, 77, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(104, 77, 24, 26));
-                }
-                else if (Nazis[x].Velocity.Y > 0 && (Nazis[x].Velocity.X < 3 && Nazis[x].Velocity.X > -3))
-                {
-                    Nazis[x].ClearFrames();
-                    Nazis[x].direction = Direction.DOWN;
-                    Nazis[x].AddFrame(new Rectangle(79, 0, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(130, 0, 24, 26));
-                    Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
-                }
+                    else if (Nazis[x].Velocity.X < 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
+                    {
+                        Nazis[x].ClearFrames();
+                        Nazis[x].direction = Direction.LEFT;
+                        Nazis[x].AddFrame(new Rectangle(79, 25, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(130, 25, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(104, 25, 24, 26));
+                    }
 
-                if (Nazis[x].Location.X >= 1215 || Nazis[x].health <= 0)
-                {
-                    Nazis.RemoveAt(x);
-                }
+                    else if (Nazis[x].Velocity.Y < 0 && (Nazis[x].Velocity.X < 3 && Nazis[x].Velocity.X > -3))
+                    {
+                        Nazis[x].ClearFrames();
+                        Nazis[x].direction = Direction.UP;
+                        Nazis[x].AddFrame(new Rectangle(79, 77, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(130, 77, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(104, 77, 24, 26));
+                    }
+                    else if (Nazis[x].Velocity.Y > 0 && (Nazis[x].Velocity.X < 3 && Nazis[x].Velocity.X > -3))
+                    {
+                        Nazis[x].ClearFrames();
+                        Nazis[x].direction = Direction.DOWN;
+                        Nazis[x].AddFrame(new Rectangle(79, 0, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(130, 0, 24, 26));
+                        Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
+                    }
 
-                if (Nazis[x].inRange == true)
-                {
-                    NazisinRange.Add(Nazis[x]);
-                }
+                   
+
+                    if (Nazis[x].inRange == true)
+                    {
+                        naziTargets.Enqueue(Nazis[x]);
+                    }
+                    else
+                    {
+                        //_         _
+                        // \_(o_o)_/    LOL I DUNNO
+                        //     |   
+                        //     |
+                        //    / \
+                    }
+
+                    if (naziTargets.Count > 0)
+                    {
+                        if (Nazis[x].Location.X >= 1215 || Nazis[x].health <= 0)
+                        {
+                            naziTargets.Dequeue();
+                        }
+                    }
+                } 
             
             }
 
