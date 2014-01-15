@@ -35,6 +35,7 @@ namespace AmericaDefense
         private Vector2 previousLocation = Vector2.Zero;
         private Vector2 currentWaypoint = Vector2.Zero;
         private Queue<Vector2> waypoints = new Queue<Vector2>();
+        
 
         public Direction direction;
         public Nazi(
@@ -90,7 +91,7 @@ namespace AmericaDefense
             return true;
         }
 
-
+        public bool alreadyQueued;
         public bool inRange;
         public int health;
         public int speed;

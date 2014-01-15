@@ -97,6 +97,10 @@ namespace AmericaDefense
 
             footSoldier.GetEnemyStats(EnemyType.FOOTSOLDIER);
             
+
+
+
+
             Nazis.Add(footSoldier);
         }
 
@@ -172,26 +176,33 @@ namespace AmericaDefense
                         Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
                     }
 
-                   
-
-                    if (Nazis[x].inRange == true)
+                    if (Nazis[x].alreadyQueued == false && Nazis[x].inRange == true)
                     {
-                        naziTargets.Enqueue(Nazis[x]);
+                            naziTargets.Enqueue(Nazis[x]);
+                            Nazis[x].alreadyQueued = true;
                     }
                     else
                     {
-                        //_         _
-                        // \_(o_o)_/    LOL I DUNNO
-                        //     |   
-                        //     |
-                        //    / \
+                            //_         _
+                            // \_(o_o)_/    LOL I DUNNO
+                            //     |   
+                            //     |
+                            //    / \
                     }
 
                     if (naziTargets.Count > 0)
                     {
-                        if (Nazis[x].Location.X >= 1215 || Nazis[x].health <= 0)
+                         if (naziTargets.Peek().inRange == false || naziTargets.Peek().health <= 0)
+                         {
+                             naziTargets.Dequeue();
+                         }
+                    }
+
+                    if (Nazis.Count > 0)
+                    {
+                        if (Nazis[x].Location.X >= 1215)
                         {
-                            naziTargets.Dequeue();
+                            Nazis.RemoveAt(x);
                         }
                     }
                 } 
