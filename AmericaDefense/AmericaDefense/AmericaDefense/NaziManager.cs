@@ -12,7 +12,7 @@ namespace AmericaDefense
         private Texture2D texture;
         public Rectangle initialFrame;
         private int frameCount;
-        
+        public static int count = 0;
         public static List<Nazi> Nazis = new List<Nazi>();
         public static List<Nazi> NazisinRange = new List<Nazi>();
         public static Queue<Nazi> naziTargets = new Queue<Nazi>();
@@ -22,7 +22,7 @@ namespace AmericaDefense
         public int MinNazisPerWave = 10;
         public int MaxNazisPerWave = 10;
         private float nextWaveTimer = 0.0f;
-        private float nextWaveMinTimer = 60.0f;
+        private float nextWaveMinTimer = 20.0f;
         private float naziSpawnTimer = 0.0f;
         private float naziSpawnWaitTime = 1;
         
@@ -195,18 +195,28 @@ namespace AmericaDefense
                          if (naziTargets.Peek().inRange == false || naziTargets.Peek().health <= 0)
                          {
                              naziTargets.Dequeue();
+                             
+                             count += 1;
                          }
                     }
 
                     if (Nazis.Count > 0)
                     {
-                        if (Nazis[x].Location.X >= 1215)
+                        if (Nazis[x].health <= 0)
+                        {
+                            TowerManager.funds += Nazis[x].value;
+                        }
+                        if (Nazis[x].Location.X >= 1215 || Nazis[x].health <= 0)
                         {
                             Nazis.RemoveAt(x);
                         }
+                        
+                        
                     }
+                    
+                        
+                    
                 } 
-            
             }
 
             for (int x = NazisinRange.Count - 1; x >= 0; x--)

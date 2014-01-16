@@ -19,7 +19,7 @@ namespace AmericaDefense
         public static List<Tower> Towers = new List<Tower>();
         float TimeBetweenPurchases = 0.5f;
         float TimeSinceLastPurchase = 0f;
-        
+        public static int funds = 100000;
         
         private Vector2 offScreen = new Vector2(-500, -500);
         
@@ -83,47 +83,53 @@ namespace AmericaDefense
             ms = Mouse.GetState();
             KeyboardState keyState = Keyboard.GetState();
 
-            if (keyState.IsKeyDown(Keys.D1) && TimeSinceLastPurchase > TimeBetweenPurchases)
+            if (keyState.IsKeyDown(Keys.D1) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 50)
                 {
                     this.frame = new Rectangle(4, 3, 33, 46);
                     SpawnTower(TowerType.RIFLE);
                     TimeSinceLastPurchase = 0f;
+                    funds -= 50;
                     
                 }
 
-            else if (keyState.IsKeyDown(Keys.D2) && TimeSinceLastPurchase > TimeBetweenPurchases)
+            else if (keyState.IsKeyDown(Keys.D2) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 300)
                 {
                     this.frame = new Rectangle(45, 9, 35, 40);
                     SpawnTower(TowerType.MG);
                     TimeSinceLastPurchase = 0f;
+                    funds -= 300;   
                 }
 
-            else if (keyState.IsKeyDown(Keys.D3) && TimeSinceLastPurchase > TimeBetweenPurchases)
+            else if (keyState.IsKeyDown(Keys.D3) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 400)
                 {
                     this.frame = new Rectangle(87, 8, 40, 55);
                     SpawnTower(TowerType.BAZOOKA);
                     TimeSinceLastPurchase = 0f;
+                    funds -= 400;
                 }
 
-            else if (keyState.IsKeyDown(Keys.D4) && TimeSinceLastPurchase > TimeBetweenPurchases)
+            else if (keyState.IsKeyDown(Keys.D4) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 300)
                 {
                     this.frame = new Rectangle(135, 7, 19, 47);
                     SpawnTower(TowerType.SNIPER);
                     TimeSinceLastPurchase = 0f;
+                    funds -= 300;
                 }
 
-            else if (keyState.IsKeyDown(Keys.D5) && TimeSinceLastPurchase > TimeBetweenPurchases)
+            else if (keyState.IsKeyDown(Keys.D5) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 300)
                 {
                     this.frame = new Rectangle(161, 11, 37, 39);
                     SpawnTower(TowerType.FLAMETHROWER);
                     TimeSinceLastPurchase = 0f;
+                    funds -= 300;
                 }
 
-            else if (keyState.IsKeyDown(Keys.D6) && TimeSinceLastPurchase > TimeBetweenPurchases)
+            else if (keyState.IsKeyDown(Keys.D6) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 5000)
                 {
                     this.frame = new Rectangle(206, 8, 32, 48);
                     SpawnTower(TowerType.AAGUN);
                     TimeSinceLastPurchase = 0f;
+                    funds -= 5000;
                 }
 
 

@@ -86,7 +86,7 @@ namespace AmericaDefense
             switch (type)
             {
                 case TowerType.RIFLE:
-                    cost = 100;
+                    cost = 50;
                     fireRate = 1;
                     damage = 40;
                     range = 250;
@@ -114,20 +114,11 @@ namespace AmericaDefense
 
                 case TowerType.SNIPER:
                     cost = 300;
-                    fireRate = 3;
+                    fireRate = 2.2f;
                     damage = 150;
                     range = 750;
                     projectileSpeed = 750;
                     CanShootAircraft = false;
-                    break;
-
-                case TowerType.AAGUN:
-                    cost = 300;
-                    fireRate = .1f;
-                    damage = 10;
-                    range = 350;
-                    projectileSpeed = 400;
-                    CanShootAircraft = true;
                     break;
 
                 case TowerType.FLAMETHROWER:
@@ -138,6 +129,17 @@ namespace AmericaDefense
                     projectileSpeed = 100;
                     CanShootAircraft = false;
                     break;
+
+                case TowerType.AAGUN:
+                    cost = 5000;
+                    fireRate = .1f;
+                    damage = 30;
+                    range = 400;
+                    projectileSpeed = 404; //projectile speed not found
+                    CanShootAircraft = true;
+                    break;
+
+                
             }
         }
         public override void Update(GameTime gametime)

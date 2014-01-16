@@ -180,7 +180,7 @@ namespace AmericaDefense
               {
                 for (int y = NaziManager.Nazis.Count - 1; y >= 0; y--)
                 {
-                    if (Vector2.Distance(TowerManager.Towers[x].Center, NaziManager.Nazis[y].Center) <= TowerManager.Towers[x].range)
+                    if (Vector2.Distance(TowerManager.Towers[x].Center, this.Center) <= TowerManager.Towers[x].range)
                     {
                         inRange = true;
                     }

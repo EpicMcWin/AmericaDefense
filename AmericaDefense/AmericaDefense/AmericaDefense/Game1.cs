@@ -14,6 +14,7 @@ using xTile.Display;
 
 namespace AmericaDefense
 {
+    //http://www.soundjay.com/gun-sound-effect.html
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -137,7 +138,7 @@ namespace AmericaDefense
 
             //MouseState ms = Mouse.GetState();
             //Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
-            
+            Window.Title = " " + "Nazis Killed: " + NaziManager.count + "   Funds: " + TowerManager.funds;
             // TODO: Add your update logic here
             naziManager.Update(gameTime);
             towerManager.Update(gameTime);
