@@ -105,7 +105,7 @@ namespace AmericaDefense
                 case EnemyType.FOOTSOLDIER:
                     health = 100 * (1 + NaziManager.counter/3);
                     speed = 150;
-                    value = 10 + (5 * NaziManager.counter);
+                    value = 10 + (3 * NaziManager.counter);
                     IsAircraft = false;
                     break;
 

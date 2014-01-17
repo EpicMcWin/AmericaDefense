@@ -22,11 +22,13 @@ namespace AmericaDefense
 
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        enum Gamestates { TitleScreen, Playing }
-        Gamestates gameState = Gamestates.Playing;
+        enum Gamestates { TitleScreen, Playing, Options }
+        Gamestates gameState = Gamestates.TitleScreen;
         //Gamestates gameState = Gamestates.TitleScreen;
         Texture2D titleScreen;
+        Texture2D optionsMenu;
         Rectangle screenBounds;
+        
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -37,6 +39,8 @@ namespace AmericaDefense
         TowerManager towerManager;
         Texture2D FootSoldiers;
         Texture2D towers;
+        
+        bool isOnStart;
         public static Texture2D projectiles;
         
         
@@ -59,8 +63,6 @@ namespace AmericaDefense
         /// </summary>
         protected override void Initialize()
         {
-            
-            
             // TODO: Add your initialization logic here
             
             base.Initialize();
@@ -72,8 +74,6 @@ namespace AmericaDefense
         /// </summary>
         protected override void LoadContent()
         {
-            
-            
             // Create a new SpriteBatch, which can be used to draw textures.
             mapDisplayDevice = new XnaDisplayDevice(Content, GraphicsDevice);
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -85,6 +85,7 @@ namespace AmericaDefense
             FootSoldiers = Content.Load<Texture2D>("FootSoldiers");
             towers = Content.Load<Texture2D>("Towers");
             titleScreen = Content.Load<Texture2D>("dday");
+            optionsMenu = Content.Load<Texture2D>("OptionsMenu");
             screenBounds = new Rectangle(0, 0, 1920, 1280);
 
             naziManager = new NaziManager(
@@ -132,20 +133,46 @@ namespace AmericaDefense
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            MouseState ms = Mouse.GetState();
+            switch (gameState)
+            {
+                case Gamestates.TitleScreen:
+                        Rectangle startButton = new Rectangle(25, 236, 202, 48);
+                        Rectangle optionsButton = new Rectangle(25, 292, 273, 43);
+                        Rectangle exitButton = new Rectangle(22, 344, 147, 50);
 
-            //MouseState ms = Mouse.GetState();
-            //Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
-            Window.Title ="Round: " + NaziManager.counter + "    Funds: " + TowerManager.funds;
-            // TODO: Add your update logic here
-            naziManager.Update(gameTime);
-            towerManager.Update(gameTime);
-            //TowerShotManager.Update(gameTime);
-            base.Update(gameTime);
+                        if (ms.X > 25 && ms.X < 227 && ms.Y > 260 && ms.Y < 350 && ms.LeftButton == ButtonState.Pressed)
+                        {
+                            gameState = Gamestates.Playing;
+                        }
 
-        }
+                        if (ms.X > 25 && ms.X < 298 && ms.Y > 360 && ms.Y < 450 && ms.LeftButton == ButtonState.Pressed)
+                        {
+                            gameState = Gamestates.Options;
+                        }
+                        break;
+                
+                    
+
+            }
+                    // Allows the game to exit
+                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                        this.Exit();
+
+                    
+                    //Window.Title = "X: " + ms.X + ", Y: " + ms.Y;
+                    Window.Title = "Round: " + NaziManager.counter + "    Funds: " + TowerManager.funds;
+                    // TODO: Add your update logic here
+                    if (gameState == Gamestates.Playing)
+                    {
+                        naziManager.Update(gameTime);
+                        towerManager.Update(gameTime);
+                    }
+                    //TowerShotManager.Update(gameTime);
+                    base.Update(gameTime);
+
+            }
+        
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -154,13 +181,31 @@ namespace AmericaDefense
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.LightSteelBlue);
-
-            map.Draw(mapDisplayDevice, viewport);
-            
-            
             spriteBatch.Begin();
-            naziManager.Draw(spriteBatch);
-            towerManager.Draw(spriteBatch);
+
+            if (gameState == Gamestates.TitleScreen)
+            {
+                spriteBatch.Draw(titleScreen,
+                new Rectangle(0, 0,
+                this.Window.ClientBounds.Width,
+                this.Window.ClientBounds.Height),
+                Color.White);
+            }
+            else if (gameState == Gamestates.Options)
+            {
+                spriteBatch.Draw(optionsMenu,
+                new Rectangle(0, 0,
+                this.Window.ClientBounds.Width,
+                this.Window.ClientBounds.Height),
+                Color.White);
+            }
+            else
+            {
+                naziManager.Draw(spriteBatch);
+                towerManager.Draw(spriteBatch);
+                map.Draw(mapDisplayDevice, viewport);
+            }
+            
             spriteBatch.End();
 
             // TODO: Add your drawing code here
