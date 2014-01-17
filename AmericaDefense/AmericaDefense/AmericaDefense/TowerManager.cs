@@ -19,7 +19,7 @@ namespace AmericaDefense
         public static List<Tower> Towers = new List<Tower>();
         float TimeBetweenPurchases = 0.5f;
         float TimeSinceLastPurchase = 0f;
-        public static int funds = 100000;
+        public static int funds = 200;
         
         private Vector2 offScreen = new Vector2(-500, -500);
         
@@ -138,9 +138,9 @@ namespace AmericaDefense
             {
                 Towers[x].Update(gametime);
 
-                for (int y = NaziManager.naziTargets.Count - 1; y >= 0; y--)
+                for (int y = Tower.naziTargets.Count - 1; y >= 0; y--)
                 {
-                    Towers[x].Shoot(NaziManager.naziTargets.Peek());
+                    Towers[x].Shoot(Tower.naziTargets.Peek());
                 }
             }
         }

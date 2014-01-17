@@ -32,7 +32,9 @@ namespace AmericaDefense
         public bool CanShootAircraft;
         Vector2 shotDirection;
         float TimeSinceLastShot;
+        public static Queue<Nazi> naziTargets = new Queue<Nazi>();
         private Vector2 offScreen = new Vector2(-500, -500);
+        public static int count = 0;
 
         public Tower(
             Vector2 location,
@@ -138,12 +140,12 @@ namespace AmericaDefense
                     projectileSpeed = 404; //projectile speed not found
                     CanShootAircraft = true;
                     break;
-
-                
             }
         }
+
         public override void Update(GameTime gametime)
         {
+            
             TimeSinceLastShot += (float)gametime.ElapsedGameTime.TotalSeconds;
             TowerShotManager.Update(gametime);
 
@@ -162,15 +164,52 @@ namespace AmericaDefense
                     }
                     else
                     {
-                          //_         _
-                          // \_(o_o)_/    LOL I DUNNO
-                          //     |   
-                          //     |
-                          //    / \
+                        //_         _
+                        // \_(o_o)_/    LOL I DUNNO
+                        //     |   
+                        //     |
+                        //    / \
+                    }
+                }
+
+
+            }
+
+            for (int x = NaziManager.Nazis.Count - 1; x >= 0; x--)
+            {
+                if (NaziManager.Nazis[x].alreadyQueued == false && Vector2.Distance(NaziManager.Nazis[x].Center, this.Center) <= this.range)
+                {
+                    naziTargets.Enqueue(NaziManager.Nazis[x]);
+                    NaziManager.Nazis[x].alreadyQueued = true;
+                    
+                }
+                else
+                {
+                        //_         _
+                        // \_(o_o)_/    LOL I DUNNO
+                        //     |   
+                        //     |
+                        //    / \
+                }
+
+                //if (naziTargets.Count > 0)
+                //{
+                //    Rotation += (float)Math.Atan2(naziTargets.Peek().Center.Y - this.Center.Y, naziTargets.Peek().Center.X - this.Center.X) - 90;
+                //}
+
+
+                if (naziTargets.Count > 0)
+                {
+                    if (Vector2.Distance(naziTargets.Peek().Center, this.Center) > this.range || naziTargets.Peek().health <= 0)
+                    {
+                        naziTargets.Peek().alreadyQueued = false;
+                        naziTargets.Dequeue();
+                        count += 1;
                     }
                 }
             }
         }
+        
 
         public override void Draw(SpriteBatch spriteBatch)
         {

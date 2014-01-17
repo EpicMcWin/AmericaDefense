@@ -103,9 +103,9 @@ namespace AmericaDefense
             switch (type)
             {
                 case EnemyType.FOOTSOLDIER:
-                    health = 100;
+                    health = 100 * (1 + NaziManager.counter/3);
                     speed = 150;
-                    value = 20;
+                    value = 10 + (5 * NaziManager.counter);
                     IsAircraft = false;
                     break;
 

@@ -12,10 +12,8 @@ namespace AmericaDefense
         private Texture2D texture;
         public Rectangle initialFrame;
         private int frameCount;
-        public static int count = 0;
         public static List<Nazi> Nazis = new List<Nazi>();
-        public static List<Nazi> NazisinRange = new List<Nazi>();
-        public static Queue<Nazi> naziTargets = new Queue<Nazi>();
+        public static int counter = 0;
         //public ShotManager EnemyShotManager;
        
 
@@ -96,18 +94,15 @@ namespace AmericaDefense
             }
 
             footSoldier.GetEnemyStats(EnemyType.FOOTSOLDIER);
-            
-
-
-
-
             Nazis.Add(footSoldier);
         }
 
         public void SpawnWave(int waveNumber)
         {
+            
             waveSpawns[waveNumber] +=
-                rand.Next(MinNazisPerWave, MaxNazisPerWave + 1);
+                10 + counter;
+            counter += 1;
         }
 
         private void updateWaveSpawns(GameTime gameTime)
@@ -140,7 +135,6 @@ namespace AmericaDefense
             {
                 for (int x = Nazis.Count - 1; x >= 0; x--)
                 {
-
                     if (Nazis[x].Velocity.X > 0 && (Nazis[x].Velocity.Y < 3 && Nazis[x].Velocity.Y > -3))
                     {
                         Nazis[x].ClearFrames();
@@ -176,29 +170,6 @@ namespace AmericaDefense
                         Nazis[x].AddFrame(new Rectangle(104, 0, 24, 26));
                     }
 
-                    if (Nazis[x].alreadyQueued == false && Nazis[x].inRange == true)
-                    {
-                            naziTargets.Enqueue(Nazis[x]);
-                            Nazis[x].alreadyQueued = true;
-                    }
-                    else
-                    {
-                            //_         _
-                            // \_(o_o)_/    LOL I DUNNO
-                            //     |   
-                            //     |
-                            //    / \
-                    }
-
-                    if (naziTargets.Count > 0)
-                    {
-                         if (naziTargets.Peek().inRange == false || naziTargets.Peek().health <= 0)
-                         {
-                             naziTargets.Dequeue();
-                             
-                             count += 1;
-                         }
-                    }
 
                     if (Nazis.Count > 0)
                     {
@@ -210,23 +181,11 @@ namespace AmericaDefense
                         {
                             Nazis.RemoveAt(x);
                         }
-                        
-                        
                     }
-                    
-                        
-                    
                 } 
             }
 
-            for (int x = NazisinRange.Count - 1; x >= 0; x--)
-            {
-                
-                if (NazisinRange[x].inRange == false || NazisinRange[x].health <= 0)
-                {
-                    NazisinRange.RemoveAt(x);
-                }
-            }
+            
 
             //for (int x = Nazis.Count - 1; x >= 0; x--)
             //{
