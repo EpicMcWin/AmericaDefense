@@ -60,8 +60,8 @@ namespace AmericaDefense
                     tower.GetTowerStats(TowerType.SNIPER);
                     break;
 
-                case TowerType.AAGUN:
-                    tower.GetTowerStats(TowerType.AAGUN);
+                case TowerType.SUPERTOWER:
+                    tower.GetTowerStats(TowerType.SUPERTOWER);
                     break;
 
                 case TowerType.FLAMETHROWER:
@@ -127,7 +127,7 @@ namespace AmericaDefense
             else if (keyState.IsKeyDown(Keys.D6) && TimeSinceLastPurchase > TimeBetweenPurchases && funds >= 5000)
                 {
                     this.frame = new Rectangle(206, 8, 32, 48);
-                    SpawnTower(TowerType.AAGUN);
+                    SpawnTower(TowerType.SUPERTOWER);
                     TimeSinceLastPurchase = 0f;
                     funds -= 5000;
                 }

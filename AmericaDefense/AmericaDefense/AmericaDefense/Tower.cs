@@ -17,7 +17,7 @@ namespace AmericaDefense
             BAZOOKA,
             SNIPER,
             FLAMETHROWER,
-            AAGUN
+            SUPERTOWER
         }
 
     class Tower : Sprite
@@ -132,7 +132,7 @@ namespace AmericaDefense
                     CanShootAircraft = false;
                     break;
 
-                case TowerType.AAGUN:
+                case TowerType.SUPERTOWER:
                     cost = 5000;
                     fireRate = .1f;
                     damage = 30;
@@ -192,10 +192,6 @@ namespace AmericaDefense
                         //    / \
                 }
 
-                //if (naziTargets.Count > 0)
-                //{
-                //    Rotation += (float)Math.Atan2(naziTargets.Peek().Center.Y - this.Center.Y, naziTargets.Peek().Center.X - this.Center.X) - 90;
-                //}
 
 
                 if (naziTargets.Count > 0)

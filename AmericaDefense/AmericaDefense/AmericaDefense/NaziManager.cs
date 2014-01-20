@@ -23,6 +23,7 @@ namespace AmericaDefense
         private float nextWaveMinTimer = 20.0f;
         private float naziSpawnTimer = 0.0f;
         private float naziSpawnWaitTime = 1;
+        public static int baseHealth = 500;
         
 
         private List<List<Vector2>> pathWaypoints =
@@ -177,10 +178,17 @@ namespace AmericaDefense
                         {
                             TowerManager.funds += Nazis[x].value;
                         }
+                        if (Nazis[x].Location.X >= 1215)
+                        {
+                            Game1.baseHealth -= Nazis[x].health;
+                        }
                         if (Nazis[x].Location.X >= 1215 || Nazis[x].health <= 0)
                         {
                             Nazis.RemoveAt(x);
                         }
+
+                        
+
                     }
                 } 
             }
