@@ -79,7 +79,8 @@ namespace AmericaDefense
                     this.Center,
                     shotDirection);
 
-               
+                Game1.gunshot.Play();
+                
             }
         }
 
@@ -193,6 +194,7 @@ namespace AmericaDefense
                 }
 
 
+                
 
                 if (naziTargets.Count > 0)
                 {
